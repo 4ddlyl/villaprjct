@@ -140,7 +140,7 @@
             <a href="{{ route('booking.page') }}" class="{{ Request::is('booking*') ? 'active' : '' }}">BOOKING</a>
         </li>
         <li>
-            <a href="javascript:void(0)" class="{{ Request::is('about*') ? 'active' : '' }}">ABOUT US</a>
+            <a href="{{ route('about.page') }}" class="{{ Request::is('about*') ? 'active' : '' }}">ABOUT US</a>
         </li>
         <li>
             <a href="javascript:void(0)" class="login-btn-nav {{ Request::is('login*') ? 'active' : '' }}">LOGIN</a>

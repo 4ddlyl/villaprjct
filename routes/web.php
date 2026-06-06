@@ -10,3 +10,5 @@ Route::get('/booking', function () {
     $villas = \App\Models\Villa::where('status', 'tersedia')->get();
     return view('booking', compact('villas'));
 })->name('booking.page');
+
+Route::view('/about', 'about')->name('about.page');
