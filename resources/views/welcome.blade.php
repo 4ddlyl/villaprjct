@@ -30,14 +30,13 @@
             max-width: 1440px;
             margin: 0 auto;
             position: relative;
-            padding-top: 73px; /* Menghindari konten tertutup navbar fixed */
+            padding-top: 73px; 
         }
 
-        /* ========== HERO SECTION STYLE + PARALLAX ========== */
         .hero-section {
             position: relative;
             width: 100%;
-            height: 80vh; /* Tinggi diatur dinamis proporsional layar */
+            height: 80vh; 
             min-height: 500px;
             display: flex;
             flex-direction: column;
@@ -52,15 +51,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 120%; /* Lebih tinggi untuk efek parallax */
+            height: 120%; 
             object-fit: cover;
             z-index: 1;
             will-change: transform;
-            /* Efek parallax: background bergerak lebih lambat */
             transform: translateY(0);
         }
 
-        /* Overlay gelap transparan tipis agar teks putih mudah dibaca */
         .hero-section::after {
             content: '';
             position: absolute;
@@ -71,7 +68,7 @@
 
         .hero-content {
             position: relative;
-            z-index: 3; /* Naik di atas overlay gambar */
+            z-index: 3; 
             padding: 0 20px;
             animation: heroFadeInUp 1.2s ease-out;
         }
@@ -128,14 +125,12 @@
             transform: scale(1.05);
         }
 
-        /* ========== SECTION GENERAL LAYOUT (MENGGANTI ABSOLUTE) ========== */
         .section-container {
             width: 90%;
             max-width: 1200px;
-            margin: 60px auto; /* Memberi jarak otomatis antar section tanpa saling tabrak */
+            margin: 60px auto; 
         }
 
-        /* ========== SCROLL REVEAL ANIMATION ========== */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(40px);
@@ -147,12 +142,10 @@
             transform: translateY(0);
         }
 
-        /* Delay untuk child elements (stagger effect) */
         .service-item, .villa-gallery img, .step-card {
             transition-delay: 0.1s;
         }
 
-        /* ========== SECTION TITLE & LINES SYSTEM ========== */
         .section-title-line {
             display: flex;
             align-items: center;
@@ -174,7 +167,6 @@
             opacity: 0.3;
         }
 
-        /* ========== SERVICES CARD PANEL ========== */
         .services-panel {
             background: #d9d9d9;
             border-radius: 20px;
@@ -227,7 +219,6 @@
             line-height: 1.4;
         }
 
-        /* ========== VILLA STAR CONTENT ========== */
         .villa-gallery {
             display: flex;
             flex-wrap: wrap;
@@ -253,7 +244,6 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* ========== STEP CARDS CONTENT ========== */
         .step-cards {
             display: flex;
             flex-wrap: wrap;
@@ -298,7 +288,6 @@
             line-height: 1.3;
         }
 
-        /* ========== CONTACT SECTION ========== */
         .contact-section {
             width: 100%;
             background-color: #d9d9d9;
@@ -350,166 +339,11 @@
             font-size: 16px;
         }
 
-        /* ========== FOOTER ========== */
-        .footer {
-            background-color: #404040;
-            padding: 60px 20px 30px;
-        }
-
-        .footer .frame {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer .heading {
-            font-family: "Cormorant", serif;
-            font-weight: 700;
-            color: #fafafa;
-            font-size: 30px;
-            margin-bottom: 15px;
-        }
-
-        .footer .text-wrapper-16 {
-            font-family: "Cormorant", serif;
-            font-weight: 400;
-            color: #b8b2b2;
-            font-size: 14px;
-            line-height: 1.6;
-            max-width: 300px;
-        }
-
-        .footer .text-wrapper-17 {
-            font-family: "Cormorant", serif;
-            font-weight: 600;
-            color: #fafafa;
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-
-        .footer .text-wrapper-18, .footer .text-wrapper-19 {
-            font-family: "Cormorant", serif;
-            font-weight: 400;
-            color: #b8b2b2;
-            font-size: 14px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .footer .text-wrapper-18:hover, .footer .text-wrapper-19:hover {
-            color: #ffffff;
-        }
-
-        .social-icons {
-            margin-top: 25px;
-            display: flex;
-            gap: 18px;
-        }
-
-        .social-icons a {
-            color: #b8b2b2;
-            font-size: 20px;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        /* ========== NAVBAR ========== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 73px;
-            z-index: 1000;
-            background-color: #d9d9d9;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-        }
-
-        .navbar-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-bg {
-            width: 36px;
-            height: 36px;
-            background-color: #3e362e;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: system-ui, sans-serif;
-            font-weight: bold;
-            font-style: italic;
-            color: white;
-            font-size: 14px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: "Cormorant", serif;
-            font-weight: 600;
-            color: #3e362e;
-            font-size: 13px;
-            text-decoration: none;
-            opacity: 0.88;
-            transition: 0.2s;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-            color: #000000;
-        }
-
-        .nav-links a.active {
-    color: #000000 !important; /* Warnanya dibikin hitam pekat biar kontras */
-    font-weight: 700 !important; /* Dibikin lebih tebal dari menu lain */
-    opacity: 1 !important; /* Hilangkan transparansi */
-    border-bottom: 2px solid #3e362e; /* Kasih garis bawah penanda yang estetik */
-    padding-bottom: 4px; /* Jarak antara teks ke garis bawah */
-}
-
-        .login-btn-nav {
-            background-color: #404040;
-            border-radius: 50px;
-            padding: 8px 24px;
-            color: white !important;
-            font-weight: 700;
-        }
-
-        .mobile-menu-btn { display: none; }
-
-        /* ========== RESPONSIVE MEDIA QUERIES ========== */
         @media (max-width: 768px) {
             .hero-section .text-wrapper { font-size: 32px; }
             .hero-section .div { font-size: 32px; }
             .hero-section .discover-beatiful { font-size: 14px; }
             .section-title-line { font-size: 20px; }
-            .footer .frame { flex-direction: column; gap: 30px; }
-            .social-icons { justify-content: center; }
-            .navbar { padding: 0 20px; }
-            .nav-links { gap: 15px; }
-            .nav-links a { font-size: 11px; }
-        }
-
-        @media (max-width: 650px) {
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; font-size: 24px; cursor: pointer; color: #3e362e; }
         }
     </style>
 </head>
@@ -529,9 +363,6 @@
         </div>
     </div>
 
-    </div>
-
-    <!-- OUR SERVICE SECTION -->
     <div class="section-container reveal-on-scroll" id="serviceSection">
         <div class="section-title-line">Our Service</div>
         <div class="services-panel">
@@ -563,7 +394,6 @@
         </div>
     </div>
 
-    <!-- VILLA THE STAR SECTION -->
     <div class="section-container reveal-on-scroll" id="villaSection">
         <div class="section-title-line">Villa The Star</div>
         <div class="villa-gallery">
@@ -573,7 +403,6 @@
         </div>
     </div>
 
-    <!-- STEP PROCESS SECTION -->
     <div class="section-container reveal-on-scroll" id="stepSection">
         <div class="section-title-line">Step Process Content</div>
         <div class="step-cards">
@@ -584,7 +413,6 @@
         </div>
     </div>
 
-    <!-- CONTACT SECTION -->
     <div class="contact-section reveal-on-scroll" id="contactSection">
         <div class="frame-6">
             <div class="pricing-plans">Yall get any problem?</div>
@@ -595,46 +423,12 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="frame">
-            <div>
-                <div class="heading">Luxury Villa Experience</div>
-                <p class="text-wrapper-16">The purpose of a FAQ is generally to provide information on frequent questions or concerns.</p>
-                <div class="social-icons">
-                    <a href="#" target="_blank" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#b8b2b2'"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" target="_blank" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='#b8b2b2'"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" target="_blank" onmouseover="this.style.color='#E1306C'" onmouseout="this.style.color='#b8b2b2'"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" target="_blank" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#b8b2b2'"><i class="fa-brands fa-github"></i></a>
-                </div>
-            </div>
-
-            <div>
-                <div class="text-wrapper-17">Company</div>
-                <div class="text-wrapper-18" onclick="alert('Home')">Home</div>
-                <div class="text-wrapper-19" onclick="alert('Booking')">Booking</div>
-                <div class="text-wrapper-19" onclick="alert('About us')">About us</div>
-            </div>
-
-            <div>
-                <div class="text-wrapper-17">Contact Us</div>
-                <div class="text-wrapper-18">Villaku@gmail.com</div>
-                <div class="text-wrapper-19">089999999999</div>
-            </div>
-        </div>
-
-        <div style="width: 100%; max-width: 1240px; margin: 40px auto 20px; border-top: 1px solid #5e5e5e;"></div>
-        <p style="font-family: 'Epilogue', sans-serif; font-weight: 400; color: #fafafa; font-size: 14px; text-align: center;">© Copyright 2026, All Rights Reserved</p>
-    </footer>
+    @include('layouts.footer')
+    
 </div>
 
 <script>
-    function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('mobile-active');
-        }
     (function() {
-        // ========== 1. PARALLAX EFFECT ON HERO BACKGROUND ==========
         const parallaxBg = document.getElementById('parallaxBg');
         const heroSection = document.getElementById('heroSection');
         
@@ -644,44 +438,35 @@
                 const heroOffset = heroSection.offsetTop;
                 const heroHeight = heroSection.offsetHeight;
                 
-                // Hitung seberapa jauh scroll relatif terhadap hero section
                 let distance = scrollPosition - heroOffset;
                 
-                // Batasi efek parallax agar tidak terlalu ekstrim
                 if (distance < 0) distance = 0;
                 if (distance > heroHeight * 0.5) distance = heroHeight * 0.5;
                 
-                // Gerakkan background dengan kecepatan lebih lambat (efek parallax)
                 const yOffset = distance * 0.45;
                 parallaxBg.style.transform = `translateY(${yOffset}px)`;
             });
         }
 
-        // ========== 2. SCROLL REVEAL (FADE IN ON SCROLL) ==========
         const revealElements = document.querySelectorAll('.reveal-on-scroll');
-        
-        // Tambahkan observer untuk scroll reveal
         const observerOptions = {
-            threshold: 0.15,      // Muncul ketika 15% elemen terlihat
-            rootMargin: '0px 0px -50px 0px'  // Sedikit offset agar lebih smooth
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
         };
         
         const revealObserver = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target); // Hentikan observe setelah muncul
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
         
-        // Observe semua elemen dengan class reveal-on-scroll
         revealElements.forEach(el => {
             revealObserver.observe(el);
         });
         
-        // ========== 3. STAGGER EFFECT UNTUK CHILD ELEMENTS ==========
-        // Memberikan delay pada setiap child untuk efek berurutan
         const serviceItems = document.querySelectorAll('.service-item');
         const villaImages = document.querySelectorAll('.villa-gallery img');
         const stepCards = document.querySelectorAll('.step-card');
@@ -696,39 +481,6 @@
         applyStaggerDelay(villaImages, 0.15);
         applyStaggerDelay(stepCards, 0.12);
         
-        // ========== 4. SMOOTH SCROLL UNTUK NAVBAR (opsional) ==========
-        // Tambahkan smooth scroll saat klik link navbar (untuk navigasi halus)
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Jika link bukan LOGIN, lakukan smooth scroll ke section terkait
-                const linkText = this.innerText.trim();
-                if (linkText !== 'LOGIN') {
-                    e.preventDefault();
-                    let targetSection = null;
-                    if (linkText === 'HOME') {
-                        targetSection = document.getElementById('heroSection');
-                    } else if (linkText === 'BOOKING') {
-                        targetSection = document.getElementById('villaSection');
-                    } else if (linkText === 'ABOUT US') {
-                        targetSection = document.getElementById('contactSection');
-                    }
-                    
-                    if (targetSection) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    } else {
-                        // fallback alert untuk demo
-                        alert(`${linkText} page (demo)`);
-                    }
-                }
-            });
-        });
-        
-        // ========== 5. TRIGGER REVEAL UNTUK ELEMEN YANG SUDAH TERLIHAT SAAT LOAD ==========
-        // Cek apakah ada elemen yang sudah terlihat saat halaman dimuat
         setTimeout(() => {
             revealElements.forEach(el => {
                 const rect = el.getBoundingClientRect();
@@ -740,8 +492,6 @@
             });
         }, 200);
         
-        
-        // ========== 8. HOVER EFFECT UNTUK GAMBAR VILLA (sudah ada di CSS, tambahan logging) ==========
         console.log('Parallax & Scroll Reveal animations enabled');
     })();
 </script>
