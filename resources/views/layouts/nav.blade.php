@@ -1,4 +1,5 @@
 <style>
+    
     .navbar {
         position: fixed;
         top: 0;
@@ -18,7 +19,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #4f4c49ff; /* Warna base lingkaran gelap cokelat tua */
+        background-color: #4f4c49ff;
         width: 38px;
         height: 38px;
         border-radius: 50%;
@@ -35,6 +36,8 @@
         display: inline-block;
         letter-spacing: 0.5px;
     }
+
+
 
     .nav-links {
         display: flex;
@@ -60,7 +63,7 @@
 
     .nav-links a.active {
         color: #000000 !important;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
         opacity: 1 !important;
         border-bottom: 2px solid #3e362e;
         padding-bottom: 4px;
@@ -99,7 +102,7 @@
             top: 73px;
             left: 0;
             width: 100%;
-            height: auto; 
+            height: auto;
             background-color: #d9d9d9;
             gap: 24px;
             padding: 30px 0 40px 0;
@@ -126,15 +129,15 @@
 
 <div class="navbar">
     <div class="navbar-logo">
-    <span class="logo-text" data-text="VL">VL</span>
-</div>
+        <span class="logo-text" data-text="VL">VL</span>
+    </div>
 
     <ul class="nav-links" id="navLinks">
         <li>
             <a href="{{ url('/') }}" class="{{ Request::is('/') ? 'active' : '' }}">HOME</a>
         </li>
         <li>
-            <a href="javascript:void(0)" class="{{ Request::is('booking*') ? 'active' : '' }}">BOOKING</a>
+            <a href="{{ route('booking.page') }}" class="{{ Request::is('booking*') ? 'active' : '' }}">BOOKING</a>
         </li>
         <li>
             <a href="javascript:void(0)" class="{{ Request::is('about*') ? 'active' : '' }}">ABOUT US</a>
@@ -154,10 +157,10 @@
         const navLinks = document.getElementById('navLinks');
         const menuBtn = document.getElementById('menuBtn');
         const menuIcon = document.getElementById('menuIcon');
-        
+
         navLinks.classList.toggle('mobile-active');
         menuBtn.classList.toggle('is-active');
-        
+
         if (navLinks.classList.contains('mobile-active')) {
             menuIcon.classList.remove('fa-bars');
             menuIcon.classList.add('fa-xmark');
@@ -173,22 +176,32 @@
             link.addEventListener('click', function(e) {
                 const text = this.innerText.trim();
                 let target = null;
-                
+
+                // Hanya jalankan smooth scroll jika element target ada di halaman saat ini
                 if (text === 'HOME') target = document.getElementById('heroSection');
-                if (text === 'BOOKING') target = document.getElementById('villaSection');
                 if (text === 'ABOUT US') target = document.getElementById('contactSection');
-                
+
+                // Jika sedang berada di halaman booking dan menekan HOME, biarkan link berpindah alami ke '/'
+                if ((text === 'HOME' || text === 'ABOUT US') && !target) {
+                    return; 
+                }
+
+                // Jika menu BOOKING ditekan, biarkan pindah halaman murni tanpa diinterupsi javascript
+                if (text === 'BOOKING') {
+                    return; 
+                }
+
                 if (target) {
                     e.preventDefault();
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    
+
                     const container = document.getElementById('navLinks');
                     const btn = document.getElementById('menuBtn');
                     const icon = document.getElementById('menuIcon');
-                    
+
                     if (container && container.classList.contains('mobile-active')) {
                         container.classList.remove('mobile-active');
                         if (btn) btn.classList.remove('is-active');
