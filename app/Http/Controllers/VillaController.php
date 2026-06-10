@@ -14,6 +14,12 @@ class VillaController extends Controller
         return view('admin.kelola_villa', compact('villas'));
     }
 
+    public function show($id)
+    {
+        $villa = Villa::findOrFail($id);
+        return view('villa_detail', compact('villa'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

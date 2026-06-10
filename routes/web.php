@@ -24,4 +24,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Kelola Villa routes
+    Route::get('/villa', [App\Http\Controllers\VillaController::class, 'index'])->name('villa');
+    Route::post('/villa', [App\Http\Controllers\VillaController::class, 'store'])->name('villa.store');
+    Route::put('/villa/{id}', [App\Http\Controllers\VillaController::class, 'update'])->name('villa.update');
+    Route::delete('/villa/{id}', [App\Http\Controllers\VillaController::class, 'destroy'])->name('villa.destroy');
+    Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
+
 });
