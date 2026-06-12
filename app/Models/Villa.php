@@ -25,4 +25,19 @@ class Villa extends Model
     {
         return $this->hasMany(Reservasi::class, 'villa_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(VillaImage::class)->orderBy('sort_order');
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(VillaImage::class)->where('is_primary', true);
+    }
+
+    public function getFirstImageAttribute()
+    {
+        return $this->images->first()->image_path ?? null;
+    }
 }

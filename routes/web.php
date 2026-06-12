@@ -9,11 +9,15 @@ Route::get('/', function () {
 });
 
 Route::get('/booking', function () {
-    $villas = \App\Models\Villa::where('status', 'tersedia')->get();
+    $villas = \App\Models\Villa::with('images')->get(); // ambil semua villa
     return view('booking', compact('villas'));
 })->name('booking.page');
 
+// Route detail villa untuk CUSTOMER
+Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
+
 Route::view('/about', 'about')->name('about.page');
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     
@@ -30,5 +34,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/villa/{id}', [App\Http\Controllers\VillaController::class, 'update'])->name('villa.update');
     Route::delete('/villa/{id}', [App\Http\Controllers\VillaController::class, 'destroy'])->name('villa.destroy');
     Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
+    Route::get('/villa/{id}/edit', [App\Http\Controllers\VillaController::class, 'edit'])->name('villa.edit');
 
 });

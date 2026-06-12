@@ -108,7 +108,6 @@
                             </div>
                         </div>
                     </div>                    
-
                 </div>
             </div>
 
@@ -116,15 +115,15 @@
             <div class="p-6">
                 
                 <!-- JUDUL HALAMAN -->
-<div class="mb-6">
-    <div class="flex items-center gap-3">
-        <h1 class="text-2xl font-bold text-gray-800">Daftar Villa</h1>
-        <div class="bg-[#16614D]/10 text-[#16614D] px-3 py-1 rounded-full text-sm font-medium">
-            Total: {{ $villas->count() }} Villa
-        </div>
-    </div>
-    <p class="text-gray-500 text-sm mt-1">Kelola dan pantau semua villa yang tersedia.</p>
-</div>
+                <div class="mb-6">
+                    <div class="flex items-center gap-3">
+                        <h1 class="text-2xl font-bold text-gray-800">Daftar Villa</h1>
+                        <div class="bg-[#16614D]/10 text-[#16614D] px-3 py-1 rounded-full text-sm font-medium">
+                            Total: {{ $villas->count() }} Villa
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-1">Kelola dan pantau semua villa yang tersedia.</p>
+                </div>
 
                 <!-- ALERT MESSAGES -->
                 @if(session('success'))
@@ -138,35 +137,35 @@
                     </div>
                 @endif
 
-<!-- FILTER & SEARCH - SEJAJAR -->
-<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <!-- Kiri: Search & Filter Status Dropdown -->
-    <div class="flex flex-wrap items-center gap-3">
-        <!-- Search Input -->
-        <div class="relative">
-            <input type="text" id="searchInput" placeholder="Filter berdasarkan nama villa..." class="pl-10 pr-4 py-2 border rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-[#16614D] focus:border-transparent text-sm">
-            <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-        </div>
-        
-        <!-- Dropdown Filter Status -->
-        <select id="statusFilter" class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#16614D] bg-white">
-            <option value="all">Semua Status</option>
-            <option value="tersedia">Tersedia</option>
-            <option value="tidak tersedia">Tidak Tersedia</option>
-            <option value="dipesan">Dipesan</option>
-        </select>
-    </div>
-    
-    <!-- Kanan: Tombol Tambah Villa -->
-    <button onclick="openCreateModal()" class="btn-primary flex items-center gap-2 px-4 py-2 bg-[#16614D] text-white rounded-lg text-sm font-medium">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-        </svg>
-        Tambah Villa
-    </button>
-</div>
+                <!-- FILTER & SEARCH - SEJAJAR -->
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <!-- Kiri: Search & Filter Status Dropdown -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <!-- Search Input -->
+                        <div class="relative">
+                            <input type="text" id="searchInputTable" placeholder="Filter berdasarkan nama villa..." class="pl-10 pr-4 py-2 border rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-[#16614D] focus:border-transparent text-sm">
+                            <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Dropdown Filter Status -->
+                        <select id="statusFilter" class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#16614D] bg-white">
+                            <option value="all">Semua Status</option>
+                            <option value="tersedia">Tersedia</option>
+                            <option value="tidak tersedia">Tidak Tersedia</option>
+                            <option value="dipesan">Dipesan</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Kanan: Tombol Tambah Villa -->
+                    <button onclick="openCreateModal()" class="btn-primary flex items-center gap-2 px-4 py-2 bg-[#16614D] text-white rounded-lg text-sm font-medium">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Tambah Villa
+                    </button>
+                </div>
 
                 <!-- TABEL VILLA -->
                 <div class="bg-white rounded-2xl border overflow-hidden">
@@ -249,9 +248,9 @@
 
     <!-- MODAL CREATE -->
     <div id="createModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl w-full max-w-md p-6">
+        <div class="bg-white rounded-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
             <h3 class="text-xl font-bold mb-4">Tambah Villa Baru</h3>
-            <form action="{{ route('admin.villa.store') }}" method="POST">
+            <form action="{{ route('admin.villa.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-4">
                     <div>
@@ -279,6 +278,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Fasilitas</label>
                         <textarea name="fasilitas" rows="3" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]" placeholder="Pisahkan dengan koma, contoh: Kolam renang, WiFi, AC"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Pisahkan setiap fasilitas dengan koma</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -287,6 +287,12 @@
                             <option value="dipesan">Dipesan</option>
                             <option value="tidak tersedia">Tidak Tersedia</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Villa</label>
+                        <input type="file" name="gambar[]" multiple accept="image/*" 
+           class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <p class="text-xs text-gray-500 mt-1">Bisa pilih lebih dari satu gambar (CTRL + klik). Gambar pertama akan menjadi gambar utama.</p>
                     </div>
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
@@ -299,9 +305,9 @@
 
     <!-- MODAL EDIT -->
     <div id="editModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl w-full max-w-md p-6">
+        <div class="bg-white rounded-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
             <h3 class="text-xl font-bold mb-4">Edit Villa</h3>
-            <form id="editForm" method="POST">
+            <form id="editForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="space-y-4">
@@ -330,6 +336,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Fasilitas</label>
                         <textarea name="fasilitas" id="edit_fasilitas" rows="3" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Pisahkan setiap fasilitas dengan koma</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -339,6 +346,13 @@
                             <option value="tidak tersedia">Tidak Tersedia</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tambah Gambar Baru</label>
+                        <input type="file" name="gambar[]" multiple accept="image/*" 
+                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <p class="text-xs text-gray-500 mt-1">Upload gambar baru akan menambah gallery (tidak mengganti yang lama)</p>
+                    </div>
+                    <div id="existingImages" class="mt-3"></div>
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
                     <button type="button" onclick="closeEditModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Batal</button>
@@ -366,57 +380,13 @@
 
     <script>
         // Filter Status dengan Dropdown
-const statusFilter = document.getElementById('statusFilter');
-const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const searchInputTable = document.getElementById('searchInputTable');
 
-function filterData() {
-    const status = statusFilter.value;
-    const searchTerm = searchInput.value.toLowerCase();
-    const rows = document.querySelectorAll('.villa-row');
-    let visibleCount = 0;
-    
-    rows.forEach(row => {
-        const rowStatus = row.getAttribute('data-status');
-        const rowName = row.getAttribute('data-name');
-        
-        let statusMatch = (status === 'all') || (rowStatus === status);
-        let searchMatch = rowName.includes(searchTerm);
-        
-        if (statusMatch && searchMatch) {
-            row.style.display = '';
-            visibleCount++;
-        } else {
-            row.style.display = 'none';
-        }
-    });
-    document.getElementById('displayCount').innerText = visibleCount;
-}
-
-statusFilter.addEventListener('change', filterData);
-searchInput.addEventListener('keyup', filterData);
-        // Toggle Notification Dropdown
-        const notificationBtn = document.getElementById('notificationBtn');
-        const notificationDropdown = document.getElementById('notificationDropdown');
-        
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('hidden');
-            });
-            document.addEventListener('click', (e) => {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.add('hidden');
-                }
-            });
-        }
-        
-        // Filter Status Function
-        let currentStatus = 'all';
-        
-        function filterStatus(status) {
-            currentStatus = status;
+        function filterData() {
+            const status = statusFilter.value;
+            const searchTerm = searchInputTable ? searchInputTable.value.toLowerCase() : '';
             const rows = document.querySelectorAll('.villa-row');
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             let visibleCount = 0;
             
             rows.forEach(row => {
@@ -433,21 +403,28 @@ searchInput.addEventListener('keyup', filterData);
                     row.style.display = 'none';
                 }
             });
-            document.getElementById('displayCount').innerText = visibleCount;
-            
-            // Update active button style
-            document.querySelectorAll('.status-filter').forEach(btn => {
-                btn.classList.remove('bg-[#16614D]', 'text-white');
-                btn.classList.add('bg-gray-100', 'text-gray-600');
-            });
-            event.target.classList.remove('bg-gray-100', 'text-gray-600');
-            event.target.classList.add('bg-[#16614D]', 'text-white');
+            const displayCountSpan = document.getElementById('displayCount');
+            if (displayCountSpan) displayCountSpan.innerText = visibleCount;
         }
+
+        if (statusFilter) statusFilter.addEventListener('change', filterData);
+        if (searchInputTable) searchInputTable.addEventListener('keyup', filterData);
+
+        // Toggle Notification Dropdown
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationDropdown = document.getElementById('notificationDropdown');
         
-        // Search Input
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            filterStatus(currentStatus);
-        });
+        if (notificationBtn && notificationDropdown) {
+            notificationBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notificationDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
+                    notificationDropdown.classList.add('hidden');
+                }
+            });
+        }
         
         // Modal Functions
         function openCreateModal() {
@@ -471,8 +448,26 @@ searchInput.addEventListener('keyup', filterData);
                     document.getElementById('edit_fasilitas').value = data.fasilitas || '';
                     document.getElementById('edit_status').value = data.status;
                     document.getElementById('editForm').action = `/admin/villa/${id}`;
+                    
+                    // Tampilkan gambar existing
+                    const existingImagesDiv = document.getElementById('existingImages');
+                    if (data.images && data.images.length > 0) {
+                        let imagesHtml = '<p class="text-xs text-gray-500 mb-2">Gambar saat ini:</p><div class="flex gap-2 flex-wrap">';
+                        data.images.forEach(img => {
+                            imagesHtml += `<img src="/storage/${img.image_path}" class="w-16 h-16 object-cover rounded-lg border">`;
+                        });
+                        imagesHtml += '</div>';
+                        existingImagesDiv.innerHTML = imagesHtml;
+                    } else {
+                        existingImagesDiv.innerHTML = '<p class="text-xs text-gray-400">Belum ada gambar</p>';
+                    }
+                    
                     document.getElementById('editModal').classList.remove('hidden');
                     document.getElementById('editModal').classList.add('flex');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Gagal mengambil data villa');
                 });
         }
         function closeEditModal() {
@@ -490,6 +485,11 @@ searchInput.addEventListener('keyup', filterData);
             document.getElementById('deleteModal').classList.add('hidden');
             document.getElementById('deleteModal').classList.remove('flex');
         }
+        
+        // Initial display count
+        const initialCount = document.querySelectorAll('.villa-row').length;
+        const displayCountSpan = document.getElementById('displayCount');
+        if (displayCountSpan) displayCountSpan.innerText = initialCount;
     </script>
 </body>
 </html>
