@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;       
 use App\Http\Controllers\Admin\DashboardController; 
+use App\Http\Controllers\Admin\VerifikasiPembayaranController;
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -35,5 +36,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/villa/{id}', [App\Http\Controllers\VillaController::class, 'destroy'])->name('villa.destroy');
     Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
     Route::get('/villa/{id}/edit', [App\Http\Controllers\VillaController::class, 'edit'])->name('villa.edit');
+
+    // Verifikasi Pembayaran routes
+    Route::get('/verifikasi-pembayaran', [VerifikasiPembayaranController::class, 'index'])->name('verifikasi.index');
+    Route::put('/verifikasi/{id}/verifikasi', [VerifikasiPembayaranController::class, 'verifikasi'])->name('verifikasi.verifikasi');
+    Route::put('/verifikasi/{id}/tolak', [VerifikasiPembayaranController::class, 'tolak'])->name('verifikasi.tolak');
+    Route::get('/verifikasi/{id}/bukti', [VerifikasiPembayaranController::class, 'showBukti'])->name('verifikasi.bukti');
 
 });

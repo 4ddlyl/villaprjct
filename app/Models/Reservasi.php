@@ -9,7 +9,7 @@ class Reservasi extends Model
 {
     use HasFactory;
 
-    protected $table = 'reservasis';  // ← karena tabel di DB bernama bookings
+    protected $table = 'reservasis';
 
     protected $fillable = [
         'user_id',
@@ -17,6 +17,7 @@ class Reservasi extends Model
         'checkin',
         'checkout',
         'total_harga',
+        'bukti_pembayaran',  // sudah termasuk
         'status',
     ];
 
