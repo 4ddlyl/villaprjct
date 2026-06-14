@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;       
 use App\Http\Controllers\Admin\DashboardController; 
 use App\Http\Controllers\Admin\VerifikasiPembayaranController;
+use App\Http\Controllers\Admin\StatusCustomerController;
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -42,5 +43,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/verifikasi/{id}/verifikasi', [VerifikasiPembayaranController::class, 'verifikasi'])->name('verifikasi.verifikasi');
     Route::put('/verifikasi/{id}/tolak', [VerifikasiPembayaranController::class, 'tolak'])->name('verifikasi.tolak');
     Route::get('/verifikasi/{id}/bukti', [VerifikasiPembayaranController::class, 'showBukti'])->name('verifikasi.bukti');
+
+    // Status Customer routes
+    Route::get('/status-customer', [StatusCustomerController::class, 'index'])->name('status-customer.index');
+    Route::get('/status-customer/{id}/detail', [StatusCustomerController::class, 'detail'])->name('status-customer.detail');
+    Route::put('/status-customer/{id}/toggle-ban', [StatusCustomerController::class, 'toggleBan'])->name('status-customer.toggle-ban');
 
 });
