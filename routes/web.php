@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController; 
 use App\Http\Controllers\Admin\VerifikasiPembayaranController;
 use App\Http\Controllers\Admin\StatusCustomerController;
+use App\Http\Controllers\Admin\HistoryTransaksiController;
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -48,5 +49,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/status-customer', [StatusCustomerController::class, 'index'])->name('status-customer.index');
     Route::get('/status-customer/{id}/detail', [StatusCustomerController::class, 'detail'])->name('status-customer.detail');
     Route::put('/status-customer/{id}/toggle-ban', [StatusCustomerController::class, 'toggleBan'])->name('status-customer.toggle-ban');
+
+     // History Transaksi routes
+    Route::get('/history-transaksi', [HistoryTransaksiController::class, 'index'])->name('history-transaksi.index');
+    Route::get('/history-transaksi/{id}/detail', [HistoryTransaksiController::class, 'detail'])->name('history-transaksi.detail');
+    // Export Excel & PDF History Transaksi
+    Route::get('/history-transaksi/export/excel', [HistoryTransaksiController::class, 'exportExcel'])->name('history-transaksi.export-excel');
+    Route::get('/history-transaksi/export/pdf', [HistoryTransaksiController::class, 'exportPdf'])->name('history-transaksi.export-pdf');
+
 
 });
