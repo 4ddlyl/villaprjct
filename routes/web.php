@@ -6,10 +6,18 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VerifikasiPembayaranController;
 use App\Http\Controllers\Admin\StatusCustomerController;
 use App\Http\Controllers\Admin\HistoryTransaksiController;
+use App\Http\Controllers\Customer\AuthController as CustomerAuthController;
 
 Route::get('/', function () {
     return view('welcome'); 
 });
+
+// ROUTE CUSTOMER AUTH
+Route::get('/register', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
+Route::post('/register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
+Route::get('/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
+Route::post('/login', [CustomerAuthController::class, 'login'])->name('customer.login.submit');
+Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
 
 Route::get('/booking', function () {
     $villas = \App\Models\Villa::with('images')->get(); // ambil semua villa

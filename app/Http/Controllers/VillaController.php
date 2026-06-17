@@ -69,7 +69,7 @@ public function edit($id)
             'fasilitas'       => 'nullable|string',
             'status'          => 'sometimes|in:tersedia,tidak tersedia',
             'gambar'          => 'nullable|array',
-            'gambar.*'        => 'image|mimes:jpg,jpeg,png|max:2048',
+            'gambar.*'        => 'image|mimes:jpg,jpeg,png|max:5120',
         ]);
         
         $villa->update($validated);

@@ -21,7 +21,6 @@ class DashboardController extends Controller
         $reservasiMenunggu = Reservasi::where('status', 'pending')->count();
         
         // Verifikasi menunggu (sudah upload bukti tapi belum dicek admin)
-        // Catatan: Kalau kolom bukti_pembayaran belum ada, komen dulu baris ini
         $verifikasiMenunggu = 0;
         
         // Total Villa
@@ -29,8 +28,8 @@ class DashboardController extends Controller
         
         // Customer Aktif (yang pernah booking)
         $customerAktif = User::where('role', 'customer')
-                             ->whereHas('reservasis')
-                             ->count();
+                     ->where('status', 'active')
+                     ->count();
         
         // Reservasi Terbaru (5 data)
         $reservasiTerbaru = Reservasi::with(['user', 'villa'])
