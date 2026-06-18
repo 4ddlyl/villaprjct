@@ -11,21 +11,23 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-    'name',
-    'username',    
-    'email',
-    'password',
-    'role',
-    'status',
-    'alasan_ban',
-];
+        'name',
+        'username',
+        'email',
+        'password',
+        'role',
+        'status',
+        'alasan_ban',
+    ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime', 'role' => 'string',
+        'email_verified_at' => 'datetime',
+        'role' => 'string',
     ];
 
     public function reservasis()

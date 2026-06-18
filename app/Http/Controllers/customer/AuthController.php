@@ -27,7 +27,7 @@ class AuthController extends Controller
             'terms' => 'accepted',
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
@@ -35,8 +35,6 @@ class AuthController extends Controller
             'role' => 'customer',
             'status' => 'active',
         ]);
-
-        Auth::login($user);
 
         return redirect()->route('customer.login')->with('success', 'Akun berhasil dibuat! Silakan login.');
     }
@@ -58,32 +56,45 @@ class AuthController extends Controller
         // Cek apakah user login dengan username atau email
         $field = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+        // Cari user berdasarkan username/email
+        $user = User::where($field, $request->username)->first();
+
+        // Jika user tidak ditemukan
+        if (!$user) {
+            return back()->withErrors([
+                'username' => 'Username atau email tidak ditemukan'
+            ])->onlyInput('username');
+        }
+
+        // Jika user statusnya banned, tolak login
+        if ($user->status === 'banned') {
+            return back()->withErrors([
+                'username' => 'Akun Anda telah dibanned, karena ' . ($user->alasan_ban ?? '')
+            ])->onlyInput('username');
+        }
+
+        // Coba login
         $credentials = [
             $field => $request->username,
             'password' => $request->password,
         ];
 
-        // Cek status user (banned)
-        $user = User::where($field, $request->username)->first();
-        if ($user && $user->status === 'banned') {
-            return back()->withErrors([
-                'username' => 'Akun Anda telah diblokir. ' . ($user->alasan_ban ?? 'Silakan hubungi admin.')
-            ]);
-        }
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            // Jika admin, redirect ke dashboard admin
             if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
 
+            // Jika customer, redirect ke halaman utama
             return redirect()->intended('/');
         }
 
+        // Jika password salah
         return back()->withErrors([
-            'username' => 'Username atau password salah',
-        ]);
+            'username' => 'Password salah'
+        ])->onlyInput('username');
     }
 
     // Logout
@@ -93,6 +104,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Anda telah logout');
     }
 }

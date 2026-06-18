@@ -21,10 +21,10 @@ class StatusCustomerController extends Controller
         // Statistik
         $totalCustomers = User::where('role', 'customer')->count();
         $activeCustomers = User::where('role', 'customer')
-                               ->where('is_banned', false)
+                               ->where('status', 'active')  // ← PERBAIKI: is_banned → status
                                ->count();
         $bannedCustomers = User::where('role', 'customer')
-                               ->where('is_banned', true)
+                               ->where('status', 'banned')  // ← PERBAIKI: is_banned → status
                                ->count();
         $haventReserved = User::where('role', 'customer')
                               ->whereDoesntHave('reservasis')
@@ -40,24 +40,55 @@ class StatusCustomerController extends Controller
     }
     
     public function detail($id)
-    {
-        $customer = User::with(['reservasis' => function($query) {
-            $query->with('villa')->orderBy('created_at', 'desc')->take(5);
-        }])->findOrFail($id);
-        
-        $totalReservasi = $customer->reservasis()->count();
-        $totalBelanja = $customer->reservasis()->where('status', 'dibayar')->sum('total_harga');
-        
-        return view('admin.modal_customer_detail', compact('customer', 'totalReservasi', 'totalBelanja'));
+{
+    $customer = User::with(['reservasis' => function($query) {
+        $query->with('villa')->orderBy('created_at', 'desc')->take(5);
+    }])->findOrFail($id);
+    
+    $totalReservasi = $customer->reservasis()->count();
+    $totalBelanja = $customer->reservasis()->where('status', 'dibayar')->sum('total_harga');
+    
+    // Return JSON untuk JavaScript
+    return response()->json([
+        'id' => $customer->id,
+        'name' => $customer->name,
+        'email' => $customer->email,
+        'status' => $customer->status,
+        'created_at' => $customer->created_at,
+        'total_reservasi' => $totalReservasi,
+        'total_belanja' => $totalBelanja,
+        'reservasis' => $customer->reservasis->map(function($item) {
+            return [
+                'checkin' => $item->checkin,
+                'villa' => $item->villa ? ['nama_villa' => $item->villa->nama_villa] : null,
+                'total_harga' => $item->total_harga,
+                'status' => $item->status,
+            ];
+        }),
+    ]);
+}
+    
+    public function toggleBan(Request $request, $id)
+{
+    $customer = User::findOrFail($id);
+    
+    // Toggle status
+    $customer->status = $customer->status === 'active' ? 'banned' : 'active';
+    
+    // Jika di-ban, simpan alasan
+    if ($customer->status === 'banned') {
+        $customer->alasan_ban = $request->input('alasan_ban');  // ← TANGKAP ALASAN
     }
     
-    public function toggleBan($id)
-    {
-        $customer = User::findOrFail($id);
-        $customer->is_banned = !$customer->is_banned;
-        $customer->save();
-        
-        $status = $customer->is_banned ? 'diblokir' : 'diaktifkan';
-        return redirect()->back()->with('success', "Customer berhasil {$status}");
+    // Jika di-unban, hapus alasan
+    if ($customer->status === 'active') {
+        $customer->alasan_ban = null;
     }
+    
+    $customer->save();
+    
+    
+    $status = $customer->status === 'banned' ? 'diblokir' : 'diaktifkan';
+    return redirect()->back()->with('success', "Customer berhasil {$status}");
+}
 }
