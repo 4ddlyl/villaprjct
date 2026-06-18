@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reservasi;  // ini model yang mapping ke tabel bookings
+use App\Models\Reservasi;  // ini model yang mapping ketabel bookings
 use App\Models\Villa;
 use App\Models\User;
 

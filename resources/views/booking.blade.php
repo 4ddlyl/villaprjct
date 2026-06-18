@@ -466,8 +466,11 @@
                                 Rp ${harga.toLocaleString('id-ID')}<span class="unit">/night</span>
                             </div>
                             <div class="card-footer-action">
-                                <a href="/villa/${villa.id}" class="action-btn">View Details</a>
-                            </div>
+    ${villa.status === 'tersedia' 
+        ? `<a href="/villa/${villa.id}" class="action-btn">View Details</a>`
+        : `<button class="action-btn" style="background-color: #9ca3af; cursor: not-allowed;" disabled>View Details</button>`
+    }
+</div>
                         </div>
                     </div>
                 `;

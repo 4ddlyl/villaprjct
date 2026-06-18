@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\VerifikasiPembayaranController;
 use App\Http\Controllers\Admin\StatusCustomerController;
 use App\Http\Controllers\Admin\HistoryTransaksiController;
 use App\Http\Controllers\Customer\AuthController as CustomerAuthController;
+use App\Http\Controllers\Customer\BookingController;
+use App\Http\Controllers\Customer\ReservasiController;
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -26,6 +28,18 @@ Route::get('/booking', function () {
 
 // Route detail villa untuk CUSTOMER
 Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
+
+// ========== ROUTE CUSTOMER BOOKING ==========
+Route::middleware(['auth'])->prefix('booking')->name('customer.booking.')->group(function () {
+    Route::post('/store', [BookingController::class, 'store'])->name('store');
+});
+// ========== ROUTE CUSTOMER RESERVASI ==========
+Route::middleware(['auth'])->prefix('reservasi')->name('customer.reservasi.')->group(function () {
+    Route::get('/', [ReservasiController::class, 'index'])->name('index');
+    Route::get('/{id}', [ReservasiController::class, 'show'])->name('show');
+    Route::post('/{id}/upload-bukti', [ReservasiController::class, 'uploadBukti'])->name('upload-bukti');
+    });
+
 
 Route::view('/about', 'about')->name('about.page');
 

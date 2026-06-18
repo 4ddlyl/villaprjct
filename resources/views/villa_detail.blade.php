@@ -6,123 +6,230 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: 'poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         body {
-            background: #f5f7fa;
+            background: #f0f2f5;
+        }
+        .villa-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .badge-ready {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .btn-book {
+            background: #16614D;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.2s;
+            border: none;
+            width: 100%;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .btn-book:hover {
+            background: #0f4a3a;
+        }
+        .btn-book:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .btn-book:disabled:hover {
+            background: #a0aec0;
+        }
+        .input-field {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 11px 16px;
+            width: 100%;
+            font-size: 14px;
+            background: #fafafa;
+            transition: 0.2s;
+            color: #1a1a2e;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #16614D;
+            box-shadow: 0 0 0 3px rgba(22,97,77,0.08);
+            background: white;
+        }
+        .input-field:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .input-field::placeholder {
+            color: #aaa;
+        }
+        .fasilitas-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #374151;
+        }
+        .fasilitas-item svg {
+            width: 18px;
+            height: 18px;
+            color: #16614D;
+            flex-shrink: 0;
+        }
+        .divider {
+            border-color: #f0f0f0;
+        }
+        .stat-label {
+            color: #9ca3af;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-
-<div class="container mx-auto px-6 py-10 max-w-6xl">
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+    <div class="grid md:grid-cols-3 gap-6">
         
-        <!-- Header: Nama Villa & Lokasi -->
-        <div class="p-6 border-b">
-            <h1 class="text-2xl font-bold text-gray-800">{{ $villa->nama_villa }}</h1>
-            <p class="text-gray-500 text-sm mt-1">{{ $villa->lokasi ?? 'Bali, Indonesia' }}</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-0">
-            
-            <!-- KIRI: Gambar -->
-            <div class="bg-gray-100">
+        <!-- KIRI: Gambar + Info -->
+        <div class="md:col-span-2 space-y-6">
+            <!-- Gambar -->
+            <div class="villa-card overflow-hidden">
                 @if($villa->images && $villa->images->count() > 0)
                     <img src="/storage/{{ $villa->images->first()->image_path }}" 
-                         class="w-full h-full object-cover min-h-[400px]">
+                         class="w-full h-[440px] object-cover">
                 @else
                     <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800" 
-                         class="w-full h-full object-cover min-h-[400px]">
+                         class="w-full h-[440px] object-cover">
                 @endif
             </div>
-            
-            <!-- KANAN: Info Villa & Booking -->
-            <div class="p-6">
-                <!-- READY TO BOOK Badge -->
-                <div class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mb-4">
-                    ✓ READY TO BOOK
-                </div>
-                
-                <!-- Kapasitas & Kamar -->
-                <div class="flex items-center gap-6 mb-6">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                        <div>
-                            <p class="text-gray-400 text-xs">KAPASITAS</p>
-                            <p class="font-semibold text-gray-800">{{ $villa->kapasitas }} orang</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
-                        </svg>
-                        <div>
-                            <p class="text-gray-400 text-xs">KAMAR TIDUR</p>
-                            <p class="font-semibold text-gray-800">{{ $villa->jumlah_kamar }} Kamar</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Status -->
-                <div class="mb-6">
-                    <span class="inline-flex items-center gap-2">
-                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                        <span class="text-green-600 text-sm font-medium">Tersedia</span>
-                    </span>
-                </div>
-                
-                <!-- Harga -->
-                <div class="mb-6">
-                    <span class="text-3xl font-bold text-gray-800">Rp {{ number_format($villa->harga_per_malam, 0, ',', '.') }}</span>
-                    <span class="text-gray-500">/ night</span>
-                </div>
-                
-                <!-- Date Picker Check-in & Check-out -->
-                <div class="grid grid-cols-2 gap-4 mb-6">
+
+            <!-- Info Villa -->
+            <div class="villa-card p-7">
+                <div class="flex items-start justify-between">
                     <div>
-                        <label class="block text-gray-600 text-sm mb-1">Check-In</label>
-                        <input type="date" id="checkin" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <h1 class="text-2xl font-bold text-gray-900">{{ $villa->nama_villa }}</h1>
+                        <p class="text-gray-500 text-sm mt-1 flex items-center gap-1">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            {{ $villa->lokasi ?? 'Bali, Indonesia' }}
+                        </p>
+                    </div>
+                    <span class="badge-ready">✓ Siap Booking</span>
+                </div>
+
+                <!-- Statistik -->
+                <div class="flex flex-wrap gap-8 mt-6 pt-5 border-t divider">
+                    <div>
+                        <p class="stat-label">Kapasitas</p>
+                        <p class="font-semibold text-gray-800 text-lg mt-1">{{ $villa->kapasitas }} <span class="text-sm font-normal text-gray-500">orang</span></p>
                     </div>
                     <div>
-                        <label class="block text-gray-600 text-sm mb-1">Check-Out</label>
-                        <input type="date" id="checkout" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <p class="stat-label">Kamar Tidur</p>
+                        <p class="font-semibold text-gray-800 text-lg mt-1">{{ $villa->jumlah_kamar }} <span class="text-sm font-normal text-gray-500">kamar</span></p>
+                    </div>
+                    <div>
+                        <p class="stat-label">Status</p>
+                        <p class="font-semibold text-green-600 text-lg mt-1 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 bg-green-500 rounded-full inline-block"></span>
+                            Tersedia
+                        </p>
                     </div>
                 </div>
-                
-                <!-- Tombol Pesan Sekarang -->
-                <button onclick="pesanSekarang()" class="w-full bg-[#16614D] text-white py-3 rounded-lg font-semibold hover:bg-[#0f4a3a] transition mb-4">
-                    Pesan Sekarang
-                </button>
-                
-                <!-- Total Harga -->
-                <div class="text-center mb-4">
-                    <p class="text-gray-500 text-sm">Total : <span id="totalHarga" class="font-bold text-gray-800">Rp ---</span></p>
-                    <p class="text-gray-400 text-xs mt-1">Kamu tidak dikenakan biaya sebelum konfirmasi</p>
+
+                <!-- Fasilitas -->
+                <div class="mt-6 pt-5 border-t divider">
+                    <h3 class="font-semibold text-gray-800 text-sm mb-4">Fasilitas</h3>
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-1">
+                        @php
+                            $fasilitas = $villa->fasilitas ? explode(',', $villa->fasilitas) : [];
+                            $defaultFasilitas = ['Kolam renang pribadi', 'Dapur lengkap', 'Smart TV & Netflix', 'Wi-Fi kecepatan tinggi', 'Water heater', 'Sarapan gratis', 'Area BBQ', 'Ruang keluarga nyaman', 'Parkir luas', 'Pemandangan laut langsung'];
+                            $fasilitasList = count($fasilitas) > 0 ? $fasilitas : $defaultFasilitas;
+                        @endphp
+                        @foreach($fasilitasList as $item)
+                            <div class="fasilitas-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>{{ trim($item) }}</span>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- FASILITAS SECTION -->
-        <div class="p-6 border-t bg-gray-50">
-            <h3 class="font-bold text-gray-800 mb-4">Nikmati berbagai fasilitas nyaman yang dirancang untuk membuat pengalaman menginap Anda lebih menyenangkan dan santai.</h3>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                @php
-                    $fasilitas = $villa->fasilitas ? explode(',', $villa->fasilitas) : [];
-                    $defaultFasilitas = ['Kolam renang pribadi', 'Dapur lengkap', 'Smart TV & Netflix', 'Wi-Fi kecepatan tinggi', 'Water heater', 'Sarapan gratis', 'Area BBQ', 'Ruang keluarga nyaman', 'Parkir luas', 'Pemandangan laut langsung'];
-                    $fasilitasList = count($fasilitas) > 0 ? $fasilitas : $defaultFasilitas;
-                @endphp
-                @foreach($fasilitasList as $item)
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span class="text-gray-600 text-sm">{{ trim($item) }}</span>
+
+        <!-- KANAN: Booking Card -->
+        <div class="md:col-span-1">
+            <div class="villa-card p-6 sticky top-6">
+                <div class="mb-5 pb-4 border-b divider">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-3xl font-bold text-gray-900">Rp {{ number_format($villa->harga_per_malam, 0, ',', '.') }}</span>
+                        <span class="text-gray-400 text-sm">/ malam</span>
                     </div>
-                @endforeach
+                    <p class="text-gray-400 text-xs mt-1">Harga sudah termasuk pajak</p>
+                </div>
+
+                <form action="{{ route('customer.booking.store') }}" method="POST" id="bookingForm">
+                    @csrf
+                    <input type="hidden" name="villa_id" value="{{ $villa->id }}">
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Check-In</label>
+                            <input type="date" name="checkin" id="checkin" 
+                                   class="input-field"
+                                   min="{{ date('Y-m-d') }}" required
+                                   @guest disabled @endguest>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Check-Out</label>
+                            <input type="date" name="checkout" id="checkout" 
+                                   class="input-field"
+                                   min="{{ date('Y-m-d', strtotime('+1 day')) }}" required
+                                   @guest disabled @endguest>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 py-4 border-t border-b divider">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 text-sm">Total</span>
+                            <span id="totalHarga" class="font-bold text-gray-900 text-xl">Rp ---</span>
+                        </div>
+                        <input type="hidden" name="total_harga" id="total_harga_input" value="0">
+                        <p class="text-gray-400 text-xs mt-1">Kamu tidak dikenakan biaya sebelum konfirmasi</p>
+                    </div>
+
+                    @auth
+                        <button type="submit" class="btn-book mt-5">
+                            Pesan Sekarang
+                        </button>
+                    @else
+                        <button type="button" class="btn-book mt-5" disabled>
+                            Login untuk Booking
+                        </button>
+                        <a href="{{ route('customer.login') }}" 
+                           class="block text-center text-[#16614D] text-sm font-semibold mt-3 hover:underline">
+                            Sudah punya akun? Login di sini
+                        </a>
+                        <p class="text-center text-gray-400 text-xs mt-2">Silakan login terlebih dahulu</p>
+                    @endauth
+                </form>
             </div>
         </div>
     </div>
@@ -133,6 +240,7 @@
     const checkinInput = document.getElementById('checkin');
     const checkoutInput = document.getElementById('checkout');
     const totalHargaSpan = document.getElementById('totalHarga');
+    const totalHargaInput = document.getElementById('total_harga_input');
     
     function hitungTotal() {
         const checkin = new Date(checkinInput.value);
@@ -143,28 +251,25 @@
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const total = diffDays * hargaPerMalam;
             totalHargaSpan.innerHTML = `Rp ${total.toLocaleString('id-ID')}`;
+            totalHargaInput.value = total;
         } else {
             totalHargaSpan.innerHTML = `Rp ---`;
+            totalHargaInput.value = 0;
         }
     }
     
-    function pesanSekarang() {
-        const checkin = checkinInput.value;
-        const checkout = checkoutInput.value;
-        
-        if (!checkin || !checkout) {
-            alert('Silakan pilih tanggal check-in dan check-out terlebih dahulu');
-            return;
+    checkinInput.addEventListener('change', function() {
+        const minDate = new Date(this.value);
+        minDate.setDate(minDate.getDate() + 1);
+        checkoutInput.min = minDate.toISOString().split('T')[0];
+        if (checkoutInput.value && new Date(checkoutInput.value) <= new Date(this.value)) {
+            checkoutInput.value = '';
         }
-        
-        alert(`Pemesanan villa ${@json($villa->nama_villa)} dari ${checkin} sampai ${checkout} akan diproses.`);
-    }
+        hitungTotal();
+    });
     
-    checkinInput.addEventListener('change', hitungTotal);
     checkoutInput.addEventListener('change', hitungTotal);
 </script>
-
-@include('layouts.footer')
 
 </body>
 </html>
