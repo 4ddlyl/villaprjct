@@ -75,9 +75,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
      // History Transaksi routes
     Route::get('/history-transaksi', [HistoryTransaksiController::class, 'index'])->name('history-transaksi.index');
     Route::get('/history-transaksi/{id}/detail', [HistoryTransaksiController::class, 'detail'])->name('history-transaksi.detail');
-    // Export Excel & PDF History Transaksi
-    Route::get('/history-transaksi/export/excel', [HistoryTransaksiController::class, 'exportExcel'])->name('history-transaksi.export-excel');
-    Route::get('/history-transaksi/export/pdf', [HistoryTransaksiController::class, 'exportPdf'])->name('history-transaksi.export-pdf');
+    Route::delete('/history-transaksi/{id}', [HistoryTransaksiController::class, 'destroy'])->name('admin.history-transaksi.destroy');
 
 
 });

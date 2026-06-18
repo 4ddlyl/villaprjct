@@ -97,6 +97,14 @@
             letter-spacing: 0.5px;
             font-weight: 600;
         }
+        /* Sembunyikan scrollbar thumbnail */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body>
@@ -106,12 +114,56 @@
         
         <!-- KIRI: Gambar + Info -->
         <div class="md:col-span-2 space-y-6">
-            <!-- Gambar -->
+            <!-- Gambar Galeri dengan Slider -->
             <div class="villa-card overflow-hidden">
-                @if($villa->images && $villa->images->count() > 0)
-                    <img src="/storage/{{ $villa->images->first()->image_path }}" 
-                         class="w-full h-[440px] object-cover">
+                @php
+                    $gambarList = $villa->images;
+                @endphp
+                
+                @if($gambarList && $gambarList->count() > 0)
+                    <div class="relative">
+                        <!-- Gambar Utama -->
+                        <img id="mainImage" 
+                             src="/storage/{{ $gambarList->first()->image_path }}" 
+                             class="w-full h-[440px] object-cover transition-opacity duration-300">
+                        
+                        <!-- Indikator Jumlah Gambar -->
+                        <div class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1.5 rounded-full">
+                            <span id="currentIndex">1</span> / {{ $gambarList->count() }}
+                        </div>
+                        
+                        <!-- Tombol Navigasi Prev/Next -->
+                        @if($gambarList->count() > 1)
+                        <button onclick="changeImage(-1)" 
+                                class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition duration-200 hover:scale-105">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        <button onclick="changeImage(1)" 
+                                class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition duration-200 hover:scale-105">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                        @endif
+                    </div>
+                    
+                    <!-- Thumbnail Galeri (bisa digeser) -->
+                    @if($gambarList->count() > 1)
+                    <div class="flex gap-2 px-4 py-3 overflow-x-auto scrollbar-hide" id="galleryThumb" style="scroll-behavior: smooth;">
+                        @foreach($gambarList as $index => $gambar)
+                            <img src="/storage/{{ $gambar->image_path }}" 
+                                 onclick="setImage({{ $index }})"
+                                 data-index="{{ $index }}"
+                                 class="w-20 h-20 object-cover rounded-lg cursor-pointer transition-all duration-200 
+                                        {{ $index === 0 ? 'ring-2 ring-[#16614D] ring-offset-2' : 'opacity-70 hover:opacity-100' }}">
+                        @endforeach
+                    </div>
+                    @endif
+                    
                 @else
+                    <!-- Jika tidak ada gambar -->
                     <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800" 
                          class="w-full h-[440px] object-cover">
                 @endif
@@ -236,6 +288,7 @@
 </div>
 
 <script>
+    // ========== HARGA TOTAL ==========
     const hargaPerMalam = {{ $villa->harga_per_malam }};
     const checkinInput = document.getElementById('checkin');
     const checkoutInput = document.getElementById('checkout');
@@ -269,6 +322,55 @@
     });
     
     checkoutInput.addEventListener('change', hitungTotal);
+
+    // ========== GALERI GAMBAR ==========
+    let images = [];
+    let currentImageIndex = 0;
+    
+    @if($villa->images && $villa->images->count() > 0)
+        images = @json($villa->images->pluck('image_path'));
+    @endif
+    
+    function setImage(index) {
+        if (index < 0 || index >= images.length) return;
+        currentImageIndex = index;
+        
+        const mainImage = document.getElementById('mainImage');
+        mainImage.style.opacity = '0';
+        setTimeout(() => {
+            mainImage.src = '/storage/' + images[index];
+            mainImage.style.opacity = '1';
+        }, 150);
+        
+        document.getElementById('currentIndex').textContent = index + 1;
+        
+        document.querySelectorAll('#galleryThumb img').forEach((el, i) => {
+            if (i === index) {
+                el.classList.add('ring-2', 'ring-[#16614D]', 'ring-offset-2');
+                el.classList.remove('opacity-70');
+            } else {
+                el.classList.remove('ring-2', 'ring-[#16614D]', 'ring-offset-2');
+                el.classList.add('opacity-70');
+            }
+        });
+    }
+    
+    function changeImage(direction) {
+        let newIndex = currentImageIndex + direction;
+        if (newIndex < 0) newIndex = images.length - 1;
+        if (newIndex >= images.length) newIndex = 0;
+        setImage(newIndex);
+        
+        const thumb = document.querySelector('#galleryThumb img.ring-2');
+        if (thumb) {
+            thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' && images.length > 0) changeImage(-1);
+        if (e.key === 'ArrowRight' && images.length > 0) changeImage(1);
+    });
 </script>
 
 </body>

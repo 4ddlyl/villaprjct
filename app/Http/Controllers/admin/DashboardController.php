@@ -21,7 +21,9 @@ class DashboardController extends Controller
         $reservasiMenunggu = Reservasi::where('status', 'pending')->count();
         
         // Verifikasi menunggu (sudah upload bukti tapi belum dicek admin)
-        $verifikasiMenunggu = 0;
+        $verifikasiMenunggu = Reservasi::where('status', 'pending')
+                               ->whereNotNull('bukti_pembayaran')
+                               ->count();
         
         // Total Villa
         $totalVilla = Villa::count();

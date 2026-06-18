@@ -37,13 +37,11 @@
             <!-- TOPBAR -->
             <div class="bg-white border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
                 <div class="flex items-center gap-4">
-                    
                     <div>
                         <h1 class="text-xl font-semibold text-gray-800">History Transaksi</h1>
                         <p class="text-gray-500 text-sm mt-0.5">Kelola dan pantau semua transaksi customer</p>
                     </div>
                 </div>
-                
             </div>
 
             <!-- KONTEN YANG DISCROLL -->
@@ -174,6 +172,7 @@
                                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">TANGGAL CHECK-IN/OUT</th>
                                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">TOTAL</th>
                                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">STATUS</th>
+                                    <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
@@ -208,10 +207,20 @@
                                             {{ $statusIcon }} {{ ucfirst($reservasi->status) }}
                                         </span>
                                     </td>
+                                    <td class="px-6 py-4 text-center">
+                                        @if($reservasi->status == 'pending' || $reservasi->status == 'ditolak')
+                                        <button onclick="deleteReservasi({{ $reservasi->id }}, '{{ $reservasi->user->name ?? 'Unknown' }}')" 
+                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-1 mx-auto">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                        @else
+                                        <span class="text-gray-400 text-xs">-</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" class="px-6 py-12 text-center text-gray-400">
+                                    <td colspan="8" class="px-6 py-12 text-center text-gray-400">
                                         <i class="fas fa-receipt text-4xl mb-3 block"></i>
                                         <p>Belum ada data transaksi</p>
                                         <p class="text-sm mt-1">Transaksi akan muncul setelah customer melakukan booking</p>
@@ -250,28 +259,28 @@
         </div>
     </div>
 
+    <!-- FORM DELETE RESERVASI -->
+    <form id="deleteReservasiForm" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
     <script>
-        // Toggle Notification Dropdown
-        const notificationBtn = document.getElementById('notificationBtn');
-        const notificationDropdown = document.getElementById('notificationDropdown');
-        if (notificationBtn && notificationDropdown) {
-            notificationBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                notificationDropdown.classList.toggle('hidden');
-            });
-            document.addEventListener('click', (e) => {
-                if (!notificationBtn.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.add('hidden');
-                }
-            });
-        }
-        
         // Auto submit filter when status dropdown changes
         const statusSelect = document.querySelector('select[name="status"]');
         if (statusSelect) {
             statusSelect.addEventListener('change', function() {
                 document.getElementById('filterForm').submit();
             });
+        }
+
+        // Delete Reservasi
+        function deleteReservasi(id, name) {
+            if (confirm(`Apakah Anda yakin ingin menghapus reservasi milik "${name}"?\n\nTindakan ini tidak dapat dibatalkan!`)) {
+                const form = document.getElementById('deleteReservasiForm');
+                form.action = `/admin/history-transaksi/${id}`;
+                form.submit();
+            }
         }
     </script>
 </body>
