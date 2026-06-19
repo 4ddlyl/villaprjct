@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Luxury Villa | VL - Parallax Scroll Animation</title>
+    <title>Luxury Villa </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Kumar+One&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
@@ -30,13 +31,13 @@
             max-width: 1440px;
             margin: 0 auto;
             position: relative;
-            padding-top: 73px; 
+            padding-top: 73px;
         }
 
         .hero-section {
             position: relative;
             width: 100%;
-            height: 80vh; 
+            height: 80vh;
             min-height: 500px;
             display: flex;
             flex-direction: column;
@@ -51,7 +52,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 120%; 
+            height: 120%;
             object-fit: cover;
             z-index: 1;
             will-change: transform;
@@ -61,14 +62,17 @@
         .hero-section::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.25);
             z-index: 2;
         }
 
         .hero-content {
             position: relative;
-            z-index: 3; 
+            z-index: 3;
             padding: 0 20px;
             animation: heroFadeInUp 1.2s ease-out;
         }
@@ -78,6 +82,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0);
@@ -128,7 +133,7 @@
         .section-container {
             width: 90%;
             max-width: 1200px;
-            margin: 60px auto; 
+            margin: 60px auto;
         }
 
         .reveal-on-scroll {
@@ -142,7 +147,9 @@
             transform: translateY(0);
         }
 
-        .service-item, .villa-gallery img, .step-card {
+        .service-item,
+        .villa-gallery img,
+        .step-card {
             transition-delay: 0.1s;
         }
 
@@ -159,7 +166,8 @@
             margin-bottom: 25px;
         }
 
-        .section-title-line::before, .section-title-line::after {
+        .section-title-line::before,
+        .section-title-line::after {
             content: "";
             flex: 1;
             height: 1px;
@@ -340,160 +348,190 @@
         }
 
         @media (max-width: 768px) {
-            .hero-section .text-wrapper { font-size: 32px; }
-            .hero-section .div { font-size: 32px; }
-            .hero-section .discover-beatiful { font-size: 14px; }
-            .section-title-line { font-size: 20px; }
+            .hero-section .text-wrapper {
+                font-size: 32px;
+            }
+
+            .hero-section .div {
+                font-size: 32px;
+            }
+
+            .hero-section .discover-beatiful {
+                font-size: 14px;
+            }
+
+            .section-title-line {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="HOME">
+    <div class="HOME">
 
-    @include('layouts.nav')
-    
-    <div class="hero-section" id="heroSection">
-        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1920" alt="hero background" class="hero-bg" id="parallaxBg">
-        <div class="hero-content">
-            <div class="text-wrapper">WELCOME TO</div>
-            <div class="div">Luxury Villa Experience</div>
-            <p class="discover-beatiful">Discover beautiful villas with private pools, stunning views, and unforgettable</p>
-            <a href="#" class="book-btn">Book now!</a>
+        @include('layouts.nav')
+
+        <div class="hero-section" id="heroSection">
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1920" alt="hero background" class="hero-bg" id="parallaxBg">
+            <div class="hero-content">
+                <div class="text-wrapper">WELCOME TO</div>
+                <div class="div">Luxury Villa Experience</div>
+                <p class="discover-beatiful">Discover beautiful villas with private pools, stunning views, and unforgettable</p>
+                <a href="{{ route('booking.page') }}" class="book-btn">Book now!</a>
+            </div>
         </div>
-    </div>
 
-    <div class="section-container reveal-on-scroll" id="serviceSection">
-        <div class="section-title-line">Our Service</div>
-        <div class="services-panel">
-            <div class="service-item">
-                <div class="service-icon">
-                    <i class="fa-solid fa-hotel" style="color: white; font-size: 22px;"></i>
+        <div class="section-container reveal-on-scroll" id="serviceSection">
+            <div class="section-title-line">Our Service</div>
+            <div class="services-panel">
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-hotel" style="color: white; font-size: 22px;"></i>
+                    </div>
+                    <div class="service-title">Family Stay</div>
+                    <div class="service-desc">Villa nyaman untuk keluarga &amp; rombongan</div>
                 </div>
-                <div class="service-title">Family Stay</div>
-                <div class="service-desc">Villa nyaman untuk keluarga &amp; rombongan</div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" stroke-width="1.5"/>
-                        <path d="M8 2V6M16 2V6" stroke="white" stroke-width="1.5"/>
-                        <path d="M3 10H21" stroke="white" stroke-width="1.5"/>
-                    </svg>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" stroke-width="1.5" />
+                            <path d="M8 2V6M16 2V6" stroke="white" stroke-width="1.5" />
+                            <path d="M3 10H21" stroke="white" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                    <div class="service-title">Villa Booking</div>
+                    <div class="service-desc">Cari &amp; booking villa terbaik dengan mudah</div>
                 </div>
-                <div class="service-title">Villa Booking</div>
-                <div class="service-desc">Cari &amp; booking villa terbaik dengan mudah</div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">
-                    <i class="fa-solid fa-person-swimming" style="color: white;"></i>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-person-swimming" style="color: white;"></i>
+                    </div>
+                    <div class="service-title">Private Pool Villa</div>
+                    <div class="service-desc">Pilih villa eksklusif dengan private pool</div>
                 </div>
-                <div class="service-title">Private Pool Villa</div>
-                <div class="service-desc">Pilih villa eksklusif dengan private pool</div>
             </div>
         </div>
-    </div>
 
-    <div class="section-container reveal-on-scroll" id="villaSection">
-        <div class="section-title-line">Villa The Star</div>
-        <div class="villa-gallery">
-            <img src="{{ asset('img/g1.jpg')}} " alt="villa 1">
-            <img src="{{ asset('img/g2.jpg')}} " alt="villa 1">
-            <img src="{{ asset('img/g3.jpg')}} " alt="villa 1">
-        </div>
-    </div>
-
-    <div class="section-container reveal-on-scroll" id="stepSection">
-        <div class="section-title-line">Step Process Content</div>
-        <div class="step-cards">
-            <div class="step-card"><div class="step-number">01</div><div class="step-text">Choose Villa and Dates</div></div>
-            <div class="step-card"><div class="step-number">02</div><div class="step-text">Fill Out Booking Form</div></div>
-            <div class="step-card"><div class="step-number">03</div><div class="step-text">Transfer and Upload Proof</div></div>
-            <div class="step-card"><div class="step-number">04</div><div class="step-text">Verification and Check in</div></div>
-        </div>
-    </div>
-
-    <div class="contact-section reveal-on-scroll" id="contactSection">
-        <div class="frame-6">
-            <div class="pricing-plans">Yall get any problem?</div>
-            <p class="yall-can-contact-us">Yall can contact us, we will be ready to respond in a timely manner,<br>thank you for your attention and sorry if there is a little disturbance and confusion</p>
-            <div class="div-wrapper">
-                <div class="text-wrapper-20">Contact us</div>
+        <div class="section-container reveal-on-scroll" id="villaSection">
+            <div class="section-title-line">Villa The Star</div>
+            <div class="villa-gallery">
+                <img src="{{ asset('img/g1.jpg')}} " alt="villa 1">
+                <img src="{{ asset('img/g2.jpg')}} " alt="villa 1">
+                <img src="{{ asset('img/g3.jpg')}} " alt="villa 1">
             </div>
         </div>
+
+        <div class="section-container reveal-on-scroll" id="stepSection">
+            <div class="section-title-line">Step Process Content</div>
+            <div class="step-cards">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-text">Choose Villa and Dates</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-text">Fill Out Booking Form</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-text">Transfer and Upload Proof</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-text">Waiting for approval from admin</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section reveal-on-scroll" id="contactSection">
+            <div class="frame-6">
+                <div class="pricing-plans">Yall get any problem?</div>
+                <p class="yall-can-contact-us">Yall can contact us, we will be ready to respond in a timely manner,<br>thank you for your attention and sorry if there is a little disturbance and confusion</p>
+                <div class="div-wrapper">
+                    <a href="https://wa.me/6289999999999?text=Halo%20saya%20ingin%20bertanya%20tentang%20villa"
+                        target="_blank"
+                        class="text-wrapper-20"
+                        style="text-decoration: none; color: white;">
+                        Contact us
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @include('layouts.footer')
+
     </div>
 
-    @include('layouts.footer')
-    
-</div>
+    <script>
+        (function() {
+            const parallaxBg = document.getElementById('parallaxBg');
+            const heroSection = document.getElementById('heroSection');
 
-<script>
-    (function() {
-        const parallaxBg = document.getElementById('parallaxBg');
-        const heroSection = document.getElementById('heroSection');
-        
-        if (parallaxBg && heroSection) {
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.pageYOffset;
-                const heroOffset = heroSection.offsetTop;
-                const heroHeight = heroSection.offsetHeight;
-                
-                let distance = scrollPosition - heroOffset;
-                
-                if (distance < 0) distance = 0;
-                if (distance > heroHeight * 0.5) distance = heroHeight * 0.5;
-                
-                const yOffset = distance * 0.45;
-                parallaxBg.style.transform = `translateY(${yOffset}px)`;
-            });
-        }
+            if (parallaxBg && heroSection) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.pageYOffset;
+                    const heroOffset = heroSection.offsetTop;
+                    const heroHeight = heroSection.offsetHeight;
 
-        const revealElements = document.querySelectorAll('.reveal-on-scroll');
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const revealObserver = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
-        });
-        
-        const serviceItems = document.querySelectorAll('.service-item');
-        const villaImages = document.querySelectorAll('.villa-gallery img');
-        const stepCards = document.querySelectorAll('.step-card');
-        
-        function applyStaggerDelay(elements, baseDelay = 0.1) {
-            elements.forEach((el, index) => {
-                el.style.transitionDelay = `${baseDelay + (index * 0.1)}s`;
-            });
-        }
-        
-        applyStaggerDelay(serviceItems, 0.1);
-        applyStaggerDelay(villaImages, 0.15);
-        applyStaggerDelay(stepCards, 0.12);
-        
-        setTimeout(() => {
+                    let distance = scrollPosition - heroOffset;
+
+                    if (distance < 0) distance = 0;
+                    if (distance > heroHeight * 0.5) distance = heroHeight * 0.5;
+
+                    const yOffset = distance * 0.45;
+                    parallaxBg.style.transform = `translateY(${yOffset}px)`;
+                });
+            }
+
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const revealObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
             revealElements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                if (rect.top < windowHeight - 100) {
-                    el.classList.add('revealed');
-                    revealObserver.unobserve(el);
-                }
+                revealObserver.observe(el);
             });
-        }, 200);
-        
-        console.log('Parallax & Scroll Reveal animations enabled');
-    })();
-</script>
+
+            const serviceItems = document.querySelectorAll('.service-item');
+            const villaImages = document.querySelectorAll('.villa-gallery img');
+            const stepCards = document.querySelectorAll('.step-card');
+
+            function applyStaggerDelay(elements, baseDelay = 0.1) {
+                elements.forEach((el, index) => {
+                    el.style.transitionDelay = `${baseDelay + (index * 0.1)}s`;
+                });
+            }
+
+            applyStaggerDelay(serviceItems, 0.1);
+            applyStaggerDelay(villaImages, 0.15);
+            applyStaggerDelay(stepCards, 0.12);
+
+            setTimeout(() => {
+                revealElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    if (rect.top < windowHeight - 100) {
+                        el.classList.add('revealed');
+                        revealObserver.unobserve(el);
+                    }
+                });
+            }, 200);
+
+            console.log('Parallax & Scroll Reveal animations enabled');
+        })();
+    </script>
 </body>
+
 </html>

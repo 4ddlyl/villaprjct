@@ -92,14 +92,33 @@ public function edit($id)
     }
     
     // Hapus gambar satu per satu (opsional)
-    public function deleteImage($imageId)
-    {
-        $image = VillaImage::findOrFail($imageId);
-        Storage::disk('public')->delete($image->image_path);
+    public function deleteImage($villaId, $imageId)
+{
+    try {
+        // Cari image
+        $image = \App\Models\VillaImage::where('villa_id', $villaId)->findOrFail($imageId);
+        
+        // Hapus file dari storage
+        if (Storage::disk('public')->exists($image->image_path)) {
+            Storage::disk('public')->delete($image->image_path);
+        }
+        
+        // Hapus record dari database
         $image->delete();
         
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Gambar berhasil dihapus'
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     public function destroy($id)
     {

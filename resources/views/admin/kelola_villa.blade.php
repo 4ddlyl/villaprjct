@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Kelola Villa - Admin Villa Booking</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,11 +13,13 @@
         * {
             font-family: 'Inter', sans-serif;
         }
+
         body {
             background: #f0f2f5;
             margin: 0;
             padding: 0;
         }
+
         .stat-card {
             background: white;
             border-radius: 1rem;
@@ -23,97 +27,146 @@
             border: 1px solid #eef2f6;
             transition: all 0.2s ease;
         }
+
         .stat-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
         }
+
         .badge {
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
         }
+
         .badge-success {
             background: #d1fae5;
             color: #065f46;
         }
+
         .badge-warning {
             background: #fef3c7;
             color: #92400e;
         }
+
         .badge-danger {
             background: #fee2e2;
             color: #991b1b;
         }
+
         .badge-info {
             background: #dbeafe;
             color: #1e40af;
         }
+
         .main-content {
             overflow-y: auto;
             height: 100vh;
         }
+
         .btn-primary {
             background-color: #16614D;
             transition: all 0.2s ease;
         }
+
         .btn-primary:hover {
             background-color: #0f4a3a;
         }
+
         .modal {
             transition: opacity 0.25s ease;
         }
+
+        /* Hover effect untuk gambar di modal edit */
+        .image-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-item .delete-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-item:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .image-item .delete-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .image-item img {
+            border: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .image-item:hover img {
+            border-color: #e5e7eb;
+        }
     </style>
 </head>
+
 <body>
     <div class="flex">
         @include('layouts.sidebar')
 
         <!-- MAIN CONTENT -->
         <div class="flex-1 main-content bg-[#f0f2f5]">
-            
+
             <!-- TOPBAR -->
             <div class="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-10">
                 <div class="flex items-center gap-4">
                     <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     <h1 class="text-xl font-semibold text-gray-800">Kelola Villa</h1>
                 </div>
-                
+
                 <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <input type="text" id="searchInput" placeholder="cari sesuatu" class="pl-10 pr-4 py-2 border rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-[#16614D] focus:border-transparent">
-                        <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </div>
-                    
+
+
                     <div class="relative">
                         <button id="notificationBtn" class="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                            </svg>
+
                         </button>
-                        
+
                         <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border z-20">
                             <div class="p-3 border-b">
                                 <h3 class="font-semibold text-gray-800">Notifikasi</h3>
                             </div>
                             <div class="py-8 text-center">
                                 <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
                                 <p class="text-gray-500 text-sm">Belum ada notifikasi</p>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 
             <!-- KONTEN UTAMA -->
             <div class="p-6">
-                
+
                 <!-- JUDUL HALAMAN -->
                 <div class="mb-6">
                     <div class="flex items-center gap-3">
@@ -127,14 +180,14 @@
 
                 <!-- ALERT MESSAGES -->
                 @if(session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
-                        {{ session('success') }}
-                    </div>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
+                    {{ session('success') }}
+                </div>
                 @endif
                 @if(session('error'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
-                        {{ session('error') }}
-                    </div>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+                    {{ session('error') }}
+                </div>
                 @endif
 
                 <!-- FILTER & SEARCH - SEJAJAR -->
@@ -145,23 +198,23 @@
                         <div class="relative">
                             <input type="text" id="searchInputTable" placeholder="Filter berdasarkan nama villa..." class="pl-10 pr-4 py-2 border rounded-lg w-72 focus:outline-none focus:ring-2 focus:ring-[#16614D] focus:border-transparent text-sm">
                             <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
-                        
+
                         <!-- Dropdown Filter Status -->
                         <select id="statusFilter" class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#16614D] bg-white">
                             <option value="all">Semua Status</option>
                             <option value="tersedia">Tersedia</option>
                             <option value="tidak tersedia">Tidak Tersedia</option>
-                            <option value="dipesan">Dipesan</option>
+
                         </select>
                     </div>
-                    
+
                     <!-- Kanan: Tombol Tambah Villa -->
                     <button onclick="openCreateModal()" class="btn-primary flex items-center gap-2 px-4 py-2 bg-[#16614D] text-white rounded-lg text-sm font-medium">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Tambah Villa
                     </button>
@@ -202,12 +255,12 @@
                                         <div class="flex justify-center gap-2">
                                             <button onclick="openEditModal({{ $villa->id }})" class="text-blue-600 hover:text-blue-800 transition">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                 </svg>
                                             </button>
                                             <button onclick="openDeleteModal({{ $villa->id }}, '{{ $villa->nama_villa }}')" class="text-red-600 hover:text-red-800 transition">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                             </button>
                                         </div>
@@ -223,7 +276,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <!-- PAGINATION INFO -->
                     <div class="px-6 py-4 border-t flex items-center justify-between bg-gray-50">
                         <div class="text-sm text-gray-500">
@@ -284,14 +337,13 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                         <select name="status" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
                             <option value="tersedia">Tersedia</option>
-                            <option value="dipesan">Dipesan</option>
                             <option value="tidak tersedia">Tidak Tersedia</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Villa</label>
-                        <input type="file" name="gambar[]" multiple accept="image/*" 
-           class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <input type="file" name="gambar[]" multiple accept="image/*"
+                            class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
                         <p class="text-xs text-gray-500 mt-1">Bisa pilih lebih dari satu gambar (CTRL + klik). Gambar pertama akan menjadi gambar utama.</p>
                     </div>
                 </div>
@@ -342,14 +394,13 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                         <select name="status" id="edit_status" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
                             <option value="tersedia">Tersedia</option>
-                            <option value="dipesan">Dipesan</option>
                             <option value="tidak tersedia">Tidak Tersedia</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Tambah Gambar Baru</label>
-                        <input type="file" name="gambar[]" multiple accept="image/*" 
-                               class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
+                        <input type="file" name="gambar[]" multiple accept="image/*"
+                            class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16614D]">
                         <p class="text-xs text-gray-500 mt-1">Upload gambar baru akan menambah gallery (tidak mengganti yang lama)</p>
                     </div>
                     <div id="existingImages" class="mt-3"></div>
@@ -388,14 +439,14 @@
             const searchTerm = searchInputTable ? searchInputTable.value.toLowerCase() : '';
             const rows = document.querySelectorAll('.villa-row');
             let visibleCount = 0;
-            
+
             rows.forEach(row => {
                 const rowStatus = row.getAttribute('data-status');
                 const rowName = row.getAttribute('data-name');
-                
+
                 let statusMatch = (status === 'all') || (rowStatus === status);
                 let searchMatch = rowName.includes(searchTerm);
-                
+
                 if (statusMatch && searchMatch) {
                     row.style.display = '';
                     visibleCount++;
@@ -413,7 +464,7 @@
         // Toggle Notification Dropdown
         const notificationBtn = document.getElementById('notificationBtn');
         const notificationDropdown = document.getElementById('notificationDropdown');
-        
+
         if (notificationBtn && notificationDropdown) {
             notificationBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -425,17 +476,19 @@
                 }
             });
         }
-        
-        // Modal Functions
+
+        // ========== MODAL FUNCTIONS ==========
         function openCreateModal() {
             document.getElementById('createModal').classList.remove('hidden');
             document.getElementById('createModal').classList.add('flex');
         }
+
         function closeCreateModal() {
             document.getElementById('createModal').classList.add('hidden');
             document.getElementById('createModal').classList.remove('flex');
         }
-        
+
+        // ========== OPEN EDIT MODAL WITH DELETE IMAGE FEATURE ==========
         function openEditModal(id) {
             fetch(`/admin/villa/${id}/edit`)
                 .then(response => response.json())
@@ -448,20 +501,29 @@
                     document.getElementById('edit_fasilitas').value = data.fasilitas || '';
                     document.getElementById('edit_status').value = data.status;
                     document.getElementById('editForm').action = `/admin/villa/${id}`;
-                    
-                    // Tampilkan gambar existing
+
+                    // Tampilkan gambar existing dengan tombol hapus
                     const existingImagesDiv = document.getElementById('existingImages');
                     if (data.images && data.images.length > 0) {
                         let imagesHtml = '<p class="text-xs text-gray-500 mb-2">Gambar saat ini:</p><div class="flex gap-2 flex-wrap">';
                         data.images.forEach(img => {
-                            imagesHtml += `<img src="/storage/${img.image_path}" class="w-16 h-16 object-cover rounded-lg border">`;
+                            imagesHtml += `
+                                <div class="image-item">
+                                    <img src="/storage/${img.image_path}" class="w-16 h-16 object-cover rounded-lg border">
+                                    <button onclick="deleteImage(${data.id}, ${img.id})" 
+                                            class="delete-btn" 
+                                            title="Hapus gambar">
+                                        ✕
+                                    </button>
+                                </div>
+                            `;
                         });
                         imagesHtml += '</div>';
                         existingImagesDiv.innerHTML = imagesHtml;
                     } else {
                         existingImagesDiv.innerHTML = '<p class="text-xs text-gray-400">Belum ada gambar</p>';
                     }
-                    
+
                     document.getElementById('editModal').classList.remove('hidden');
                     document.getElementById('editModal').classList.add('flex');
                 })
@@ -470,26 +532,64 @@
                     alert('Gagal mengambil data villa');
                 });
         }
+
         function closeEditModal() {
             document.getElementById('editModal').classList.add('hidden');
             document.getElementById('editModal').classList.remove('flex');
         }
-        
+
+        function deleteImage(villaId, imageId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus gambar ini?')) return;
+
+            // Ambil CSRF token dari meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+            fetch(`/admin/villa/${villaId}/image/${imageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken || '',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Gambar berhasil dihapus');
+                        // Refresh modal edit untuk menampilkan data terbaru
+                        openEditModal(villaId);
+                    } else {
+                        alert('Gagal menghapus gambar: ' + (data.message || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error detail:', error);
+                    alert('Terjadi kesalahan: ' + error.message);
+                });
+        }
+
         function openDeleteModal(id, name) {
             document.getElementById('deleteMessage').innerText = `Apakah Anda yakin ingin menghapus villa "${name}"?`;
             document.getElementById('deleteForm').action = `/admin/villa/${id}`;
             document.getElementById('deleteModal').classList.remove('hidden');
             document.getElementById('deleteModal').classList.add('flex');
         }
+
         function closeDeleteModal() {
             document.getElementById('deleteModal').classList.add('hidden');
             document.getElementById('deleteModal').classList.remove('flex');
         }
-        
+
         // Initial display count
         const initialCount = document.querySelectorAll('.villa-row').length;
         const displayCountSpan = document.getElementById('displayCount');
         if (displayCountSpan) displayCountSpan.innerText = initialCount;
     </script>
 </body>
+
 </html>

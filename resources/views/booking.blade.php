@@ -34,16 +34,22 @@
             overflow-x: hidden;
         }
 
+        /* Parallax Hero */
         .hero-banner {
             position: relative;
             width: 100%;
             height: 500px;
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1920') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 0 52px;
             margin-top: 73px;
+            will-change: transform;
         }
 
         .hero-banner h1 {
@@ -52,6 +58,9 @@
             color: #ffffff;
             font-size: 64px;
             margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease forwards;
+            animation-delay: 0.3s;
         }
 
         .hero-banner p {
@@ -59,8 +68,32 @@
             font-weight: 400;
             color: #ffffff;
             font-size: 20px;
-            opacity: 0.9;
+            opacity: 0;
             max-width: 500px;
+            animation: fadeInUp 1.2s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .search-container {
@@ -69,6 +102,9 @@
             position: relative;
             z-index: 10;
             padding: 0 20px;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
         }
 
         .search-bar {
@@ -169,6 +205,7 @@
             gap: 35px;
         }
 
+        /* Villa Card dengan Animasi */
         .villa-card {
             background-color: var(--colorbackgroundlight);
             border-radius: 22px;
@@ -176,11 +213,52 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            animation: fadeInScale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .villa-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        .villa-card:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+        .villa-card:nth-child(3) {
+            animation-delay: 0.19s;
+        }
+        .villa-card:nth-child(4) {
+            animation-delay: 0.26s;
+        }
+        .villa-card:nth-child(5) {
+            animation-delay: 0.33s;
+        }
+        .villa-card:nth-child(6) {
+            animation-delay: 0.40s;
+        }
+        .villa-card:nth-child(7) {
+            animation-delay: 0.47s;
+        }
+        .villa-card:nth-child(8) {
+            animation-delay: 0.54s;
+        }
+        .villa-card:nth-child(9) {
+            animation-delay: 0.61s;
+        }
+        .villa-card:nth-child(10) {
+            animation-delay: 0.68s;
+        }
+        .villa-card:nth-child(11) {
+            animation-delay: 0.75s;
+        }
+        .villa-card:nth-child(12) {
+            animation-delay: 0.82s;
         }
 
         .villa-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: -8px 12px 40px rgba(48, 58, 79, 0.3);
         }
 
         .card-img-wrapper {
@@ -194,11 +272,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .villa-card:hover .card-img-wrapper img {
-            transform: scale(1.03);
+            transform: scale(1.08);
         }
 
         .card-body {
@@ -298,13 +376,18 @@
             font-family: "DM Sans", sans-serif;
             font-weight: 700;
             font-size: 14px;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
             border: none;
             cursor: pointer;
         }
 
         .action-btn:hover {
             background-color: #0576cc;
+            transform: scale(1.02);
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
         }
 
         .empty-state {
@@ -335,6 +418,7 @@
                 padding: 0 20px;
                 height: 380px;
                 margin-top: 73px;
+                background-attachment: scroll;
             }
 
             .hero-banner h1 {
@@ -360,6 +444,10 @@
                 grid-template-columns: 1fr;
                 gap: 25px;
             }
+
+            .villa-card {
+                animation-duration: 0.5s;
+            }
         }
     </style>
 </head>
@@ -368,7 +456,8 @@
 
     @include('layouts.nav')
 
-    <div class="hero-banner">
+    <!-- Hero dengan parallax -->
+    <div class="hero-banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1920');">
         <h1>Luxury Villa Experience</h1>
         <p>Discover beautiful villas with private pools,<br>stunning views, and unforgettable stays.</p>
     </div>
@@ -379,13 +468,13 @@
                 <input type="text" id="searchInput" placeholder="Search by villa name or location...">
             </div>
             <div class="search-item">
-                <select id="cityFilter">
-                    <option value="all">All areas</option>
-                    <option value="bali">Ubud</option>
-                    <option value="jakarta">Canggu</option>
-                    <option value="bandung">Seminyak</option>
-                    <option value="yogyakarta">Uluwatu</option>
-                </select>
+                    <select id="capacityFilter">
+                        <option value="all">All Capacity</option>
+        <option value="1-5">1-5 persons</option>
+        <option value="6-10">6-10 persons</option>
+        <option value="11-15">11-15 persons</option>
+        <option value="16+">16+ persons</option>
+    </select>
             </div>
             <button class="search-btn" id="searchBtn">
                 <i class="fa-solid fa-search" style="margin-right: 8px;"></i> Search
@@ -409,135 +498,156 @@
     @include('layouts.footer')
 
     <script>
-        // Data villa dari database
-        const villasData = @json($villas);
+    // Data villa dari database
+    const villasData = @json($villas);
 
-        // Variabel filter
-        let currentStatusFilter = 'all';
-        let currentSearch = '';
-        let currentCity = 'all';
+    let currentStatusFilter = 'all';
+    let currentSearch = '';
+    let currentCapacity = 'all';
 
-        // Fungsi render card villa
-        function renderVillas(villas) {
-            const grid = document.getElementById('villaGrid');
-            const resultCount = document.getElementById('resultCount');
+    // Fungsi render card villa
+    function renderVillas(villas) {
+        const grid = document.getElementById('villaGrid');
+        const resultCount = document.getElementById('resultCount');
 
-            if (!villas || villas.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-hotel"></i>
-                        <p>No Villas Found</p>
-                        <p>Try changing your search criteria or check back later</p>
-                    </div>
-                `;
-                resultCount.innerHTML = '0 villas found';
-                return;
-            }
-
-            resultCount.innerHTML = `Found ${villas.length} villa${villas.length > 1 ? 's' : ''}`;
-
-            grid.innerHTML = villas.map(villa => {
-                const statusClass = villa.status === 'tersedia' ? 'tersedia' : 'tidak-tersedia';
-                const statusText = villa.status === 'tersedia' ? 'Tersedia' : 'Tidak tersedia';
-                const harga = villa.harga_per_malam || 0;
-
-                // Ambil gambar
-                let gambarUrl = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600';
-                if (villa.images && villa.images.length > 0) {
-                    gambarUrl = '/storage/' + villa.images[0].image_path;
-                }
-
-                return `
-                    <div class="villa-card">
-                        <div class="card-img-wrapper">
-                            <img src="${gambarUrl}" alt="${villa.nama_villa}">
-                        </div>
-                        <div class="card-body">
-                            <div class="status-badge ${statusClass}">${statusText}</div>
-                            <h3 class="villa-title">${villa.nama_villa || 'Villa Name'}</h3>
-                            <div class="villa-location">
-                                <i class="fa-solid fa-location-dot"></i> ${villa.lokasi || 'Location not set'}
-                            </div>
-                            <div class="villa-info">
-                                <span><i class="fa-solid fa-user-group"></i> ${villa.kapasitas || '?'} persons</span>
-                                <span><i class="fa-solid fa-bed"></i> ${villa.jumlah_kamar || '?'} rooms</span>
-                            </div>
-                            <div class="price-tag">
-                                Rp ${harga.toLocaleString('id-ID')}<span class="unit">/night</span>
-                            </div>
-                            <div class="card-footer-action">
-    ${villa.status === 'tersedia' 
-        ? `<a href="/villa/${villa.id}" class="action-btn">View Details</a>`
-        : `<button class="action-btn" style="background-color: #9ca3af; cursor: not-allowed;" disabled>View Details</button>`
-    }
-</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+        if (!villas || villas.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-hotel"></i>
+                    <p>No Villas Found</p>
+                    <p>Try changing your search criteria or check back later</p>
+                </div>
+            `;
+            resultCount.innerHTML = '0 villas found';
+            return;
         }
 
-        // Fungsi filter
-        function filterVillas() {
-            let filtered = [...villasData];
+        resultCount.innerHTML = `Found ${villas.length} villa${villas.length > 1 ? 's' : ''}`;
 
-            // Filter status
-            if (currentStatusFilter !== 'all') {
-                filtered = filtered.filter(v => v.status === currentStatusFilter);
+        grid.innerHTML = villas.map((villa, index) => {
+            const statusClass = villa.status === 'tersedia' ? 'tersedia' : 'tidak-tersedia';
+            const statusText = villa.status === 'tersedia' ? 'Tersedia' : 'Tidak tersedia';
+            const harga = villa.harga_per_malam || 0;
+
+            let gambarUrl = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600';
+            if (villa.images && villa.images.length > 0) {
+                gambarUrl = '/storage/' + villa.images[0].image_path;
             }
 
-            // Filter search
-            if (currentSearch.trim() !== '') {
-                const searchLower = currentSearch.toLowerCase();
-                filtered = filtered.filter(v =>
-                    (v.nama_villa || '').toLowerCase().includes(searchLower) ||
-                    (v.lokasi || '').toLowerCase().includes(searchLower)
-                );
-            }
+            const delay = (index % 12) * 0.07;
+            const style = `animation-delay: ${delay}s;`;
 
-            // Filter kota (sederhana)
-            if (currentCity !== 'all') {
-                filtered = filtered.filter(v =>
-                    (v.lokasi || '').toLowerCase().includes(currentCity.toLowerCase())
-                );
-            }
+            return `
+                <div class="villa-card" style="${style}">
+                    <div class="card-img-wrapper">
+                        <img src="${gambarUrl}" alt="${villa.nama_villa}" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="status-badge ${statusClass}">${statusText}</div>
+                        <h3 class="villa-title">${villa.nama_villa || 'Villa Name'}</h3>
+                        <div class="villa-location">
+                            <i class="fa-solid fa-location-dot"></i> ${villa.lokasi || 'Location not set'}
+                        </div>
+                        <div class="villa-info">
+                            <span><i class="fa-solid fa-user-group"></i> ${villa.kapasitas || '?'} persons</span>
+                            <span><i class="fa-solid fa-bed"></i> ${villa.jumlah_kamar || '?'} rooms</span>
+                        </div>
+                        <div class="price-tag">
+                            Rp ${harga.toLocaleString('id-ID')}<span class="unit">/night</span>
+                        </div>
+                        <div class="card-footer-action">
+                            ${villa.status === 'tersedia' 
+                                ? `<a href="/villa/${villa.id}" class="action-btn">View Details</a>`
+                                : `<button class="action-btn" style="background-color: #9ca3af; cursor: not-allowed;" disabled>View Details</button>`
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
 
-            renderVillas(filtered);
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tampilkan semua villa saat halaman dimuat
-            filterVillas();
-
-            // Search button
-            document.getElementById('searchBtn').addEventListener('click', function() {
-                currentSearch = document.getElementById('searchInput').value;
-                currentCity = document.getElementById('cityFilter').value;
-                filterVillas();
-            });
-
-            // Enter key pada search input
-            document.getElementById('searchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('searchBtn').click();
-                }
-            });
-
-            // Tab filter
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const status = this.getAttribute('data-status');
-                    currentStatusFilter = status || 'all';
-                    filterVillas();
+        // Trigger reflow untuk animasi ulang
+        requestAnimationFrame(() => {
+            const cards = grid.querySelectorAll('.villa-card');
+            cards.forEach((card, i) => {
+                const delay = (i % 12) * 0.07;
+                card.style.animationDelay = `${delay}s`;
+                card.style.animation = 'none';
+                requestAnimationFrame(() => {
+                    card.style.animation = `fadeInScale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards`;
+                    card.style.animationDelay = `${delay}s`;
                 });
             });
         });
-    </script>
+    }
+
+    // Fungsi filter
+    function filterVillas() {
+        let filtered = [...villasData];
+
+        if (currentStatusFilter !== 'all') {
+            filtered = filtered.filter(v => v.status === currentStatusFilter);
+        }
+
+        if (currentSearch.trim() !== '') {
+            const searchLower = currentSearch.toLowerCase();
+            filtered = filtered.filter(v =>
+                (v.nama_villa || '').toLowerCase().includes(searchLower) ||
+                (v.lokasi || '').toLowerCase().includes(searchLower)
+            );
+        }
+
+        if (currentCapacity !== 'all') {
+    let min = 0, max = 999;
+    
+    if (currentCapacity === '1-5') { min = 1; max = 5; }
+    else if (currentCapacity === '6-10') { min = 6; max = 10; }
+    else if (currentCapacity === '11-15') { min = 11; max = 15; }
+    else if (currentCapacity === '16+') { min = 16; max = 999; }
+    
+    filtered = filtered.filter(v => {
+        const cap = v.kapasitas || 0;
+        return cap >= min && cap <= max;
+    });
+}
+
+        renderVillas(filtered);
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        filterVillas();
+
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            currentSearch = document.getElementById('searchInput').value;
+            currentCapacity = document.getElementById('capacityFilter').value;
+            filterVillas();
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        document.getElementById('capacityFilter').addEventListener('change', function() {
+            currentCapacity = this.value;
+            filterVillas();
+        });
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const status = this.getAttribute('data-status');
+                currentStatusFilter = status || 'all';
+                filterVillas();
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

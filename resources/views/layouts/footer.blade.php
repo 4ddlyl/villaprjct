@@ -39,7 +39,8 @@
         margin-bottom: 16px;
     }
 
-    .footer .text-wrapper-18, .footer .text-wrapper-19 {
+    .footer .text-wrapper-18,
+    .footer .text-wrapper-19 {
         font-family: "Cormorant", serif;
         font-weight: 400;
         color: #b8b2b2;
@@ -49,7 +50,21 @@
         transition: 0.2s;
     }
 
-    .footer .text-wrapper-18:hover, .footer .text-wrapper-19:hover {
+    .footer .text-wrapper-18:hover,
+    .footer .text-wrapper-19:hover {
+        color: #ffffff;
+    }
+
+    .footer .text-wrapper-18 a,
+    .footer .text-wrapper-19 a {
+        color: #b8b2b2;
+        text-decoration: none;
+        transition: 0.2s;
+        display: block;
+    }
+
+    .footer .text-wrapper-18 a:hover,
+    .footer .text-wrapper-19 a:hover {
         color: #ffffff;
     }
 
@@ -67,8 +82,13 @@
     }
 
     @media (max-width: 768px) {
-        .footer .frame { flex-direction: column; gap: 30px; }
-        .social-icons { justify-content: center; }
+        .footer .frame {
+            flex-direction: column;
+            gap: 30px;
+        }
+        .social-icons {
+            justify-content: center;
+        }
     }
 </style>
 
@@ -87,15 +107,15 @@
 
         <div>
             <div class="text-wrapper-17">Company</div>
-            <div class="text-wrapper-18" onclick="alert('Home')">Home</div>
-            <div class="text-wrapper-19" onclick="alert('Booking')">Booking</div>
-            <div class="text-wrapper-19" onclick="alert('About us')">About us</div>
+            <div class="text-wrapper-18"><a href="{{ url('/') }}">Home</a></div>
+            <div class="text-wrapper-19"><a href="{{ route('booking.page') }}">Booking</a></div>
+            <div class="text-wrapper-19"><a href="{{ route('about.page') }}">About us</a></div>
         </div>
 
         <div>
             <div class="text-wrapper-17">Contact Us</div>
-            <div class="text-wrapper-18">Villaku@gmail.com</div>
-            <div class="text-wrapper-19">089999999999</div>
+            <div class="text-wrapper-18"><a href="mailto:Villaku@gmail.com">Villaku@gmail.com</a></div>
+            <div class="text-wrapper-19"><a href="tel:089999999999">089999999999</a></div>
         </div>
     </div>
 

@@ -60,6 +60,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/villa/{id}', [App\Http\Controllers\VillaController::class, 'destroy'])->name('villa.destroy');
     Route::get('/villa/{id}', [App\Http\Controllers\VillaController::class, 'show'])->name('villa.detail');
     Route::get('/villa/{id}/edit', [App\Http\Controllers\VillaController::class, 'edit'])->name('villa.edit');
+    Route::delete('/villa/{id}/image/{imageId}', [App\Http\Controllers\VillaController::class, 'deleteImage'])->name('villa.delete-image');
 
     // Verifikasi Pembayaran routes
     Route::get('/verifikasi-pembayaran', [VerifikasiPembayaranController::class, 'index'])->name('verifikasi.index');

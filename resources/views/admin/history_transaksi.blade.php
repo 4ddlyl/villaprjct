@@ -25,17 +25,30 @@
         .badge-dibayar { background: #d1fae5; color: #065f46; }
         .badge-ditolak { background: #fee2e2; color: #991b1b; }
         .badge-selesai { background: #dbeafe; color: #1e40af; }
+        .sidebar-fixed {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+        }
+        .main-content {
+            height: 100vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
-    <div class="flex min-h-screen">
-        @include('layouts.sidebar')
+    <div class="flex">
+        <!-- SIDEBAR - TETAP DI ATAS -->
+        <div class="sidebar-fixed">
+            @include('layouts.sidebar')
+        </div>
 
-        <!-- MAIN CONTENT -->
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- MAIN CONTENT - YANG DISCROLL -->
+        <div class="flex-1 main-content bg-[#f0f2f5]">
             
             <!-- TOPBAR -->
-            <div class="bg-white border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
+            <div class="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-10">
                 <div class="flex items-center gap-4">
                     <div>
                         <h1 class="text-xl font-semibold text-gray-800">History Transaksi</h1>
@@ -44,8 +57,7 @@
                 </div>
             </div>
 
-            <!-- KONTEN YANG DISCROLL -->
-            <div class="flex-1 overflow-y-auto p-6">
+            <div class="p-6">
                 
                 <!-- JUDUL HALAMAN (untuk mobile) -->
                 <div class="mb-6 lg:hidden">

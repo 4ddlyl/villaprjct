@@ -471,65 +471,70 @@
                     let riwayatHtml = '';
                     if (data.reservasis && data.reservasis.length > 0) {
                         riwayatHtml = `
-                            <h4 class="font-semibold text-gray-800 mt-4 mb-2">Riwayat Reservasi terbaru</h4>
-                            <table class="w-full text-sm">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-3 py-2 text-left">Tanggal</th>
-                                        <th class="px-3 py-2 text-left">Villa</th>
-                                        <th class="px-3 py-2 text-left">Total</th>
-                                        <th class="px-3 py-2 text-left">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${data.reservasis.map(r => `
-                                        <tr class="border-b">
-                                            <td class="px-3 py-2">${new Date(r.checkin).toLocaleDateString('id-ID')}</td>
-                                            <td class="px-3 py-2">${r.villa?.nama_villa || '-'}</td>
-                                            <td class="px-3 py-2">Rp ${parseInt(r.total_harga).toLocaleString('id-ID')}</td>
-                                            <td class="px-3 py-2">
-                                                <span class="px-2 py-1 rounded-full text-xs ${r.status === 'dibayar' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
-                                                    ${r.status === 'dibayar' ? 'Dibayar' : 'Pending'}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        `;
+                    <h4 class="font-semibold text-gray-800 mt-4 mb-2">Riwayat Reservasi terbaru</h4>
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left">Tanggal</th>
+                                <th class="px-3 py-2 text-left">Villa</th>
+                                <th class="px-3 py-2 text-left">Total</th>
+                                <th class="px-3 py-2 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.reservasis.map(r => `
+                                <tr class="border-b">
+                                    <td class="px-3 py-2">${new Date(r.checkin).toLocaleDateString('id-ID')}</td>
+                                    <td class="px-3 py-2">${r.villa?.nama_villa || '-'}</td>
+                                    <td class="px-3 py-2">Rp ${parseInt(r.total_harga).toLocaleString('id-ID')}</td>
+                                    <td class="px-3 py-2">
+                                        <span class="px-2 py-1 rounded-full text-xs 
+                                            ${r.status === 'dibayar' ? 'bg-green-100 text-green-700' : 
+                                              r.status === 'ditolak' ? 'bg-red-100 text-red-700' : 
+                                              'bg-yellow-100 text-yellow-700'}">
+                                            ${r.status === 'dibayar' ? 'Dibayar' : 
+                                              r.status === 'ditolak' ? 'Ditolak' : 
+                                              'Pending'}
+                                        </span>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
                     } else {
                         riwayatHtml = `<p class="text-gray-500 text-sm mt-4">Belum ada reservasi</p>`;
                     }
 
                     content.innerHTML = `
-                        <div class="space-y-3">
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Nama Lengkap :</span>
-                                <span class="font-medium">${data.name}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Email :</span>
-                                <span class="font-medium">${data.email}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Status :</span>
-                                <span class="font-medium ${data.status === 'active' ? 'text-green-600' : 'text-red-600'}">${data.status === 'active' ? 'Aktif' : 'Diblokir'}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Bergabung :</span>
-                                <span class="font-medium">${new Date(data.created_at).toLocaleDateString('id-ID')}</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Total Reservasi :</span>
-                                <span class="font-medium">${data.total_reservasi} reservasi</span>
-                            </div>
-                            <div class="flex justify-between border-b pb-2">
-                                <span class="text-gray-500">Total belanja :</span>
-                                <span class="font-medium">Rp ${parseInt(data.total_belanja).toLocaleString('id-ID')}</span>
-                            </div>
-                            ${riwayatHtml}
-                        </div>
-                    `;
+                <div class="space-y-3">
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Nama Lengkap :</span>
+                        <span class="font-medium">${data.name}</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Email :</span>
+                        <span class="font-medium">${data.email}</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Status :</span>
+                        <span class="font-medium ${data.status === 'active' ? 'text-green-600' : 'text-red-600'}">${data.status === 'active' ? 'Aktif' : 'Diblokir'}</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Bergabung :</span>
+                        <span class="font-medium">${new Date(data.created_at).toLocaleDateString('id-ID')}</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Total Reservasi :</span>
+                        <span class="font-medium">${data.total_reservasi} reservasi</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-500">Total belanja :</span>
+                        <span class="font-medium">Rp ${parseInt(data.total_belanja).toLocaleString('id-ID')}</span>
+                    </div>
+                    ${riwayatHtml}
+                </div>
+            `;
                 })
                 .catch(error => {
                     content.innerHTML = '<div class="text-center py-8 text-red-500"><i class="fas fa-exclamation-circle text-2xl"></i><p class="mt-2">Gagal memuat data</p></div>';
