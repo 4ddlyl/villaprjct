@@ -25,7 +25,7 @@ public function store(Request $request)
         'jumlah_kamar'    => 'required|integer|min:1',
         'fasilitas'       => 'nullable|string',
         'status'          => 'nullable|in:tersedia,tidak tersedia',
-        'gambar.*'        => 'nullable|image|mimes:jpg,jpeg,png|max:5120', // perhatikan .*
+        'gambar.*'        => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // perhatikan .*
     ]);
 
     $validated['status'] = $validated['status'] ?? 'tersedia';
@@ -69,7 +69,7 @@ public function edit($id)
             'fasilitas'       => 'nullable|string',
             'status'          => 'sometimes|in:tersedia,tidak tersedia',
             'gambar'          => 'nullable|array',
-            'gambar.*'        => 'image|mimes:jpg,jpeg,png|max:5120',
+            'gambar.*'        => 'image|mimes:jpg,jpeg,png|max:20480',
         ]);
         
         $villa->update($validated);
